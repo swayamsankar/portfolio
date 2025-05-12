@@ -38,7 +38,42 @@
             display: none;
         }
 
-        /* <!-- INSERT_YOUR_REWRITE_HERE --> */
+        /* Mobile Responsive Styles */
+        @media only screen and (max-width: 1024px) {
+            .mobile-menu-icon, .fa-xmark {
+                display: block;
+            }
+            .header-text {
+                margin-top: 40%;
+                text-align: left;
+                padding-left: 20px;
+            }
+            .header-text p.mobile-adjust {
+                font-size: 14px;
+                margin-bottom: 30px;
+                color: #ffffff;
+                margin-left: -30px;
+                margin-top: 250px; /* Moved 50 down */
+            }
+            .header-text h1.mobile-adjust {
+                margin-top: 0 !important;
+            }
+            .header-text h1.mobile-adjust {
+                font-size: 24px;
+                line-height: 1.2;
+                margin-left: -30px;
+                margin-top: 860px; /* Moved 50 down */
+            }
+            .header-text h1 span {
+                display: block;
+                margin-top: 5px;
+            }
+            .mobile-break {
+                display: none;
+            }
+            .logo {
+                width: 120px;
+            }
             #sidemenu {
                 background: #faa702;
                 position: fixed;
@@ -92,7 +127,7 @@
                 transform: scale(1.1);
                 background: rgba(255,255,255,1);
             }
-    
+        }
     </style>
 
     <!-----------about------------->
