@@ -64,13 +64,25 @@ To run the project locally:
 
 ## 🌍 Live Demo
 
-https://swayamportfoliosite.netlify.app/
+[https://swayamportfoliosite.netlify.app/](https://swayamportfoliosite.netlify.app/)
 
 ---
 
+## 🖼️ Project Preview
+
+<img width="1896" height="911" alt="image" src="https://github.com/user-attachments/assets/d80e279b-3eac-4e4a-b6b3-2fd303d89b3e" />
+
+
+---
+
+
 ## 📬 Contact
 
-For any queries or collaboration opportunities, please reach out via the **Contact** section on the website.
+For any queries or collaboration opportunities, feel free to reach out:
+
+📧 Email: swayamsankar898@gmail.com
+
+Or you can connect through the Contact section on the website.
 
 ---
 
