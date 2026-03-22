@@ -1,186 +1,193 @@
-var tablinks = document.getElementsByClassName("tab-links");
-var tabcontents = document.getElementsByClassName("tab-contents");
+/* ============================================================
+   SWAYAM PORTFOLIO — script.js
+   ============================================================ */
 
-function opentab(tabname, event) {
-    // Remove active classes from all tabs
-    for(tablink of tablinks){
-        tablink.classList.remove("active-link");
-    }
-    // Remove active classes from all tab contents
-    for(tabcontent of tabcontents){
-        tabcontent.classList.remove("active-tab");
-    }
-    // Add active classes to clicked tab
-    event.currentTarget.classList.add("active-link");
-    const tabContent = document.getElementById(tabname);
-    if (tabContent) {
-        tabContent.classList.add("active-tab");
-    }
-}
-
-// Initialize first tab as active on page load
-document.addEventListener('DOMContentLoaded', () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-        const firstTabLink = aboutSection.querySelector('.tab-links');
-        const firstTabContent = aboutSection.querySelector('.tab-contents');
-        
-        if (firstTabLink && firstTabContent) {
-            firstTabLink.classList.add("active-link");
-            firstTabContent.classList.add("active-tab");
+// ── Navbar scroll effect ──────────────────────────────────────
+window.addEventListener('scroll', () => {
+    const nb = document.getElementById('navbar');
+    if (nb) nb.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  
+  // ── Mobile menu ──────────────────────────────────────────────
+  function openNav() {
+    document.getElementById('nav-links')?.classList.add('open');
+  }
+  function closeNav() {
+    document.getElementById('nav-links')?.classList.remove('open');
+  }
+  document.querySelectorAll('#nav-links a').forEach(a => {
+    a.addEventListener('click', closeNav);
+  });
+  
+  // ── Scroll Reveal (IntersectionObserver) ─────────────────────
+  function initReveal() {
+    const els = document.querySelectorAll('[data-reveal], [data-reveal-delay]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
         }
-    }
-});
-
-// Mobile menu functionality
-const sidemenu = document.getElementById("sidemenu");
-const menuIcon = document.querySelector('.mobile-menu-icon');
-const closeIcon = document.querySelector('.fa-xmark');
-
-function openmenu() {
-    if (sidemenu) {
-        sidemenu.style.right = "0";
-    }
-}
-
-function closemenu() {
-    if (sidemenu) {
-        sidemenu.style.right = "-200px";
-    }
-}
-
-// Add event listeners for menu icons
-document.addEventListener('DOMContentLoaded', () => {
-    if (menuIcon) {
-        menuIcon.addEventListener('click', openmenu);
-    }
-    if (closeIcon) {
-        closeIcon.addEventListener('click', closemenu);
-    }
-});
-
-// Portfolio show/hide functionality
-document.getElementById('portfolio-see-more')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    const hiddenProjects = document.querySelectorAll('.hidden-projects');
-    hiddenProjects.forEach(project => {
-        project.style.display = 'block';
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => io.observe(el));
+  }
+  
+  // ── Counter animation ─────────────────────────────────────────
+  function animateCounters() {
+    document.querySelectorAll('.counter[data-target]').forEach(el => {
+      const target = parseInt(el.getAttribute('data-target'));
+      const duration = 1800;
+      const step = target / (duration / 16);
+      let cur = 0;
+      const t = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        el.textContent = Math.floor(cur);
+        if (cur >= target) clearInterval(t);
+      }, 16);
     });
-    this.style.display = 'none';
-    document.getElementById('portfolio-show-less').style.display = 'block';
-});
-
-document.getElementById('portfolio-show-less')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    const hiddenProjects = document.querySelectorAll('.hidden-projects');
-    hiddenProjects.forEach(project => {
-        project.style.display = 'none';
+  }
+  
+  function initCounters() {
+    const section = document.querySelector('.why-stats-row');
+    if (!section) return;
+    let fired = false;
+    const io = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !fired) {
+        fired = true;
+        animateCounters();
+        io.disconnect();
+      }
+    }, { threshold: 0.4 });
+    io.observe(section);
+  }
+  
+  // ── Portfolio filter ──────────────────────────────────────────
+  function filterProjects(cat, btn) {
+    // Update active tab
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  
+    document.querySelectorAll('.pcard').forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.classList.remove('hidden');
+        card.style.display = '';
+      } else {
+        card.classList.add('hidden');
+        card.style.display = 'none';
+      }
     });
-    this.style.display = 'none';
-    document.getElementById('portfolio-see-more').style.display = 'block';
-});
-
-// Carousel functionality
-document.addEventListener('DOMContentLoaded', () => {
-    const slides = document.querySelectorAll('.carousel-slide');
-    const prevBtn = document.querySelector('.carousel-btn.prev');
-    const nextBtn = document.querySelector('.carousel-btn.next');
-    const carousel = document.querySelector('.carousel');
-    let currentIndex = 0;
-    let intervalId;
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            if (i === index) {
-                slide.classList.add('active');
-            }
-        });
+  }
+  
+  // ── Certificates toggle + popup ───────────────────────────────
+  function toggleCerts(btn) {
+    const hidden = document.querySelectorAll('.hidden-cert');
+    const showing = hidden[0] && hidden[0].style.display !== 'none';
+  
+    if (showing) {
+      hidden.forEach(c => { c.style.display = 'none'; });
+      btn.textContent = 'See More Certificates';
+    } else {
+      hidden.forEach((c, i) => {
+        c.style.display = 'block';
+        setTimeout(() => { c.classList.add('visible'); }, i * 60);
+      });
+      btn.textContent = 'Show Less';
     }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    function startAutoplay() {
-        intervalId = setInterval(nextSlide, 3000);
-    }
-
-    function stopAutoplay() {
-        clearInterval(intervalId);
-    }
-
-    prevBtn?.addEventListener('click', () => {
-        prevSlide();
+  }
+  
+  function openCertPopup(src) {
+    const popup = document.getElementById('cert-popup');
+    document.getElementById('cert-popup-img').src = src;
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCertPopup() {
+    document.getElementById('cert-popup')?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  function initCertClicks() {
+    document.querySelectorAll('.cert-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        if (img) openCertPopup(img.src);
+      });
     });
-
-    nextBtn?.addEventListener('click', () => {
-        nextSlide();
+    document.getElementById('cert-popup')?.addEventListener('click', e => {
+      if (e.target === document.getElementById('cert-popup')) closeCertPopup();
     });
-
-    carousel?.addEventListener('mouseenter', stopAutoplay);
-    carousel?.addEventListener('mouseleave', startAutoplay);
-
-    if (slides.length > 0) {
-        showSlide(currentIndex);
-        startAutoplay();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+  }
+  
+  // ── Gallery Carousel ──────────────────────────────────────────
+  let slideIndex = 0;
+  let slideTimer;
+  
+  function showSlide(n) {
+    const slides = document.querySelectorAll('.c-slide');
+    if (!slides.length) return;
+    slideIndex = ((n % slides.length) + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
+  }
+  function nextSlide() { showSlide(slideIndex + 1); }
+  function prevSlide() { showSlide(slideIndex - 1); }
+  
+  function initCarousel() {
+    const carousel = document.getElementById('carousel');
+    if (!carousel) return;
+    slideTimer = setInterval(nextSlide, 3500);
+    carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+    carousel.addEventListener('mouseleave', () => { slideTimer = setInterval(nextSlide, 3500); });
+    showSlide(0);
+  }
+  
+  // ── Contact form ──────────────────────────────────────────────
+  function initContactForm() {
     const scriptURL = "https://script.google.com/macros/s/AKfycbzyMW1ZywB1UJke1jGcKQ9iLXHi1hZM335d9By1lpPcOsy0KO0wEXwxoRSPv8yFn8QHZA/exec";
     const form = document.querySelector('form[name="submit-to-google-sheet"]');
-    const responseMessage = document.getElementById("msg");
-
-    if (!form || !responseMessage) return;
-
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        responseMessage.textContent = "Submitting...";
-        responseMessage.style.color = "black";
-
-        // Validate required fields
-        const requiredFields = form.querySelectorAll('[required]');
-        let isValid = true;
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.style.borderColor = 'red';
-                isValid = false;
-            } else {
-                field.style.borderColor = '';
-            }
-        });
-
-        if (!isValid) {
-            responseMessage.textContent = "Please fill in all required fields.";
-            responseMessage.style.color = "red";
-            return;
-        }
-
-        const formData = new FormData(form);
-
-        try {
-            const response = await fetch(scriptURL, {
-                method: "POST",
-                body: formData
-            });
-
-            const result = await response.json();
-            console.log("Server Response:", result);
-
-            responseMessage.textContent = result.message || "Form submitted successfully!";
-            responseMessage.style.color = "green";
-            form.reset();
-        } catch (error) {
-            responseMessage.textContent = "Error submitting form. Please try again.";
-            responseMessage.style.color = "red";
-            console.error("Fetch Error:", error);
-        }
+    const msg = document.getElementById("msg");
+    if (!form || !msg) return;
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.textContent = "Sending...";
+      msg.style.color = "var(--gray)";
+  
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(f => {
+        if (!f.value.trim()) { f.style.borderColor = '#ef4444'; valid = false; }
+        else { f.style.borderColor = ''; }
+      });
+      if (!valid) {
+        msg.textContent = "Please fill in all required fields.";
+        msg.style.color = "#ef4444";
+        return;
+      }
+  
+      try {
+        const res = await fetch(scriptURL, { method:"POST", body: new FormData(form) });
+        const data = await res.json();
+        msg.textContent = data.message || "Message sent successfully! 🎉";
+        msg.style.color = "#22c55e";
+        form.reset();
+      } catch(err) {
+        msg.textContent = "Error sending. Please try again.";
+        msg.style.color = "#ef4444";
+      }
     });
-});
+  }
+  
+  // ── Keyboard close for popup ──────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCertPopup();
+  });
+  
+  // ── Init all ─────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    initReveal();
+    initCounters();
+    initCarousel();
+    initCertClicks();
+    initContactForm();
+  });

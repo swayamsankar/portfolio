@@ -1,707 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="device-width,initial-scale=1.0">
-        <title>portfolio site swayam</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/8c8c7c3605.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-     <div id="header">
-        <div class="container">
-            <nav>
-                <img src="images/logo.png" class="logo">
-                <ul id="sidemenu">
-                    <li><a href="#header">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#expertise">Expertise</a></li>
-                    <li><a href="#portfolio">Projects</a></li>
-                    <li><a href="#certificates">Certificate Zone</a></li>
-                    <li><a href="#achievements">Achievements</a></li>
-                    <li><a href="images/Swayam_Sankar_Nayak_Resume.pdf"_blank">Resume</a></li>
-                    <li><a href="#contact">Contact</a></li> 
-                    <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
-                </ul>
-                <i class="fa-solid fa-bars mobile-menu-icon" onclick="openmenu()"></i>
-            </nav>
-            <div class="header-text animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                <p class="mobile-adjust">Web Developer</p>
-                <h1 class="mobile-adjust">Hi, I'm <span>Swayam</span> <br class="mobile-break">Sankar Nayak from India.</h1>
-            </div>
-        </div>
-    </div>
-    <style>
-        /* Hide menu icon for desktop */
-        .mobile-menu-icon, .fa-xmark {
-            display: none;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swayam Sankar Nayak — Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/8c8c7c3605.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-        /* Mobile Responsive Styles */
-        @media only screen and (max-width: 1024px) {
-            .mobile-menu-icon, .fa-xmark {
-                display: block;
-            }
-            .header-text {
-                margin-top: 40%;
-                text-align: left;
-                padding-left: 20px;
-            }
-            .header-text p.mobile-adjust {
-                font-size: 30px;
-                margin-bottom: 30px;
-                color: #000000;
-                margin-left: -30px;
-                margin-top: 550px; /* Moved 50 down */
-            }
-            .header-text h1.mobile-adjust {
-                margin-top: 0 !important;
-            }
-            .header-text h1.mobile-adjust {
-                font-size: 40px;
-                line-height: 1.2;
-                margin-left: -30px;
-                margin-top: 860px; /* Moved 50 down */
-            }
-            .header-text h1 span {
-                display: block;
-                margin-top: 5px;
-            }
-            .mobile-break {
-                display: none;
-            }
-            .logo {
-                width: 120px;
-            }
-            #sidemenu {
-                background: #faa702;
-                position: fixed;
-                top: 0;
-                right: -200px;
-                width: 180px;
-                height: 100vh;
-                padding-top: 40px;
-                z-index: 2;
-                transition: right 0.5s;
-                border-radius: 0 0 0 20px;
-                box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-            }
-            #sidemenu li {
-                display: block;
-                margin: 10px;
-                text-align: center;
-                transition: transform 0.2s;
-            }
-            #sidemenu li:hover {
-                transform: translateX(5px);
-            }
-            #sidemenu li a {
-                color: #fff;
-                font-size: 12px;
-                padding: 6px 12px;
-                border-radius: 15px;
-                display: inline-block;
-                transition: all 0.3s;
-                text-decoration: none;
-                width: 80%;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            #sidemenu li a:hover {
-                background: rgba(255,255,255,0.1);
-                transform: scale(1.05);
-            }
-            .fa-bars, .fa-xmark {
-                font-size: 20px;
-                color: #faa702;
-                cursor: pointer;
-                background: rgba(255,255,255,0.9);
-                padding: 8px;
-                border-radius: 50%;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                transition: all 0.2s;
-            }
-            .fa-bars:hover, .fa-xmark:hover {
-                transform: scale(1.1);
-                background: rgba(255,255,255,1);
-            }
-        }
-    </style>
-
-    <!-----------about------------->
-    <div id="about">
-        <div class="container">
-            <div class="row">
-                <div class="about-col-1">
-                    <img src="images/user.png">
-                </div>
-                <div class="about-col-2">
-                    <h1 class="sub-title">ABOUT ME</h1>
-                    <p class="animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        My name is Swayam Sankar Nayak, and I consider myself a simple person with a clear sense of identity and lifestyle preferences.
-                        I am an introvert by nature, preferring the tranquility of solitude or the company of a few close friends over the bustling crowd.
-                        This introversion has shaped much of my life, influencing how I interact with the world and what I find most fulfilling.
-                    </p>
-                    <script>
-                        document.addEventListener('scroll', function() {
-                            const element = document.querySelector('.animate-on-scroll');
-                            const elementPosition = element.getBoundingClientRect().top;
-                            const screenPosition = window.innerHeight / 1.3;
-
-                            if (elementPosition < screenPosition) {
-                                element.style.opacity = '1';
-                                element.style.transform = 'translateY(0)';
-                            }
-                        });
-                    </script>
-                    <div class="table-titles animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <p class="tab-links active-link" onclick="opentab('skills', event)">Skills</p>
-                        <p class="tab-links" onclick="opentab('experience', event)">Experience</p>
-                        <p class="tab-links" onclick="opentab('education', event)">Education</p>
-                        <p class="tab-links" onclick="opentab('interests', event)">Creative Interests</p>
-                    </div>
-                    <div class="tab-contents active-tab animate-on-scroll" id="skills" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <ul>
-                            <li><span>Web Development</span><br>Full-stack web development using modern frameworks</li>
-                            <li><span>UI/UX Design</span><br>Designing intuitive and user-friendly interfaces</li>
-                            <li><span>AI/ML & Data Science</span><br>Building machine learning models and data analysis</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents animate-on-scroll" id="experience" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <ul>
-                            <li><span>2025</span><br>Founded TECHSWAY - Digital E-commerce platform and Thrilling Frames photography event booking service</li>
-                            <li><span>2024</span><br>President of Photography Club and Lead Member of Literary Club at CVRGU</li>
-                            <li><span>2022-2023</span><br>Internship at Internshala, Google, Infosys Springboard, etc.</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents animate-on-scroll" id="education" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <ul>
-                            <li><span>2024</span><br>Pursuing B.Tech in C V Raman Global University, Odisha</li>
-                            <li><span>2022</span><br>Passed out from N.C. Autonomous College, Jajpur, Odisha</li>
-                            <li><span>2020</span><br>Passed out from Jajpur Zilla School, Jajpur</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents animate-on-scroll" id="interests" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <ul>
-                            <li><span>Photography</span><br>Capturing life's moments through the lens</li>
-                            <li><span>Videography</span><br>Telling stories through moving images</li>
-                            <li><span>Documentary Creation</span><br>Exploring life through documentary-style films</li>
-                            <li><span>Graphic Design</span><br>Lead college graphic design team to create posters and visual content</li>
-                        </ul>
-                    </div>
-                    <script>
-                        document.addEventListener('scroll', function() {
-                            const elements = document.querySelectorAll('.animate-on-scroll');
-                            elements.forEach(element => {
-                                const elementPosition = element.getBoundingClientRect().top;
-                                const screenPosition = window.innerHeight / 1.3;
-
-                                if (elementPosition < screenPosition) {
-                                    element.style.opacity = '1';
-                                    element.style.transform = 'translateY(0)';
-                                }
-                            });
-                        });
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
-     <!-- --------------Expertise-------------- -->
-     <div id="expertise">
-        <div class="container">
-            <h1 class="sub-title animate-on-scroll" style="text-align: center; opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">My Expertise</h1>
-            <div class="services-list">
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-code"></i>
-                      <h2>Programming Languages</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>I have expertise in Java, Python, C, C++, and JavaScript to develop efficient software solutions.</p>
-                    </div>
-                  </div>
-                </div>
-              
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-crop"></i>
-                      <h2>Web Developer</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>Full stack developer skilled in HTML, CSS, and JS. Check out my projects in the portfolio section.</p>
-                    </div>
-                  </div>
-                </div>
-              
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-shield-halved"></i>
-                      <h2>Tools & Tech</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>Proficient in MySQL, Git, VS Code, Cursor AI, and Google Colab for full-cycle development.</p>
-                    </div>
-                  </div>
-                </div>
-              
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-database"></i>
-                      <h2>UX/UI Design</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>Skilled in Figma and Canva to design user-friendly and modern UI experiences.</p>
-                    </div>
-                  </div>
-                </div>
-              
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-cloud"></i>
-                      <h2>Frameworks</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>Hands-on with React, Node.js, and Express.js to build scalable web applications.</p>
-                    </div>
-                  </div>
-                </div>
-              
-                <div class="service-card animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                  <div class="card-inner">
-                    <div class="card-front">
-                      <i class="fa-solid fa-robot"></i>
-                      <h2>AI/ML Tools</h2>
-                    </div>
-                    <div class="card-back">
-                      <p>Experienced with TensorFlow, PyTorch, and Keras for AI-based app development.</p>
-                    </div>
-                  </div>
-                </div>
-            </div>
-        </div>
-     </div>
-      <!------------------portfolio-------------->
-      <div id="portfolio">
-        <div class="container">
-            <h1 class="sub-title">My Projects</h1>
-            <div class="work-list">
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/work-1.png">
-                    <div class="layer">
-                        <h3>THRILLING FRAMES MEDIA</h3>
-                        <p>Your go-to for weddings, films, and pro editing. We bring your vision to life.</p>
-                        <a href="https://eventphotographybooksite.netlify.app/" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/work-2.png">
-                    <div class="layer">
-                        <h3>Gastronome</h3>
-                        <p>Built a restaurant site with booking and ordering using HTML, CSS, JS, Node.js, and MySQL. 🍽️</p>
-                        <a href="https://restaurant-website-k7jb.onrender.com" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/work-3.png">
-                    <div class="layer">
-                        <h3>Online Scientific Calculator</h3>
-                        <p>React-based scientific calculator with advanced math functions and responsive design.</p>
-                        <a href="https://reactscientificcalculator.netlify.app/" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work hidden-projects animate-on-scroll" style="display: none; opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/work-4.png">
-                    <div class="layer">
-                        <h3>Portfolio Website</h3>
-                        <p>Built responsive portfolio with HTML/CSS/JS, featuring skills, projects, and clean UI/UX with animations.</p>
-                        <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work hidden-projects animate-on-scroll" style="display: none; opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/work-5.png">
-                    <div class="layer">
-                        <h3>TECHSWAY</h3>
-                        <p>Built a full-stack eCommerce site to explore, wishlist, and shop gadgets online. ⚡🛒</p>
-                        <a href="https://github.com/swayamsankar/swayams-digital-mart" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="btn" id="portfolio-see-more">See more</a>
-            <a href="#" class="btn" id="portfolio-show-less" style="display: none;">Show less</a>
-        </div>
-      </div>
-
-      <!------------------Group Projects-------------->
-      <div id="group-projects">
-        <div class="container">
-            <h1 class="sub-title">Group Projects</h1>
-            <div class="work-list">
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/group-work-1.png">
-                    <div class="layer">
-                        <h3>Apartment Management System</h3>
-                        <p>Manage apartments, track complaints, solve problems, and handle tenant communication efficiently.</p>
-                        <a href="https://github.com/swayamsankar/Apartmentsystem" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/group-work-2.webp">
-                    <div class="layer">
-                        <h3>Student Management System</h3>
-                        <p>Created a robust platform for managing student records and personal details.</p>
-                        <a href="https://github.com/swayamsankar/Students-Record-Management" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-                <div class="work animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <img src="images/group-work-3.jpg">
-                    <div class="layer">
-                        <h3>Traffic Management System</h3>
-                        <p>Intelligent system for monitoring and optimizing urban traffic flow and congestion.</p>
-                        <a href="https://github.com/swayamsankar/Traffic_Management_System" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="btn" id="group-projects-see-more">See more</a>
-            <a href="#" class="btn" id="group-projects-show-less" style="display: none;">Show less</a>
-        </div>
-      </div>
-<!-- ---------------Certificate Zone-------------- -->
-<style>
-    /* Certificate Popup Modal */
-    .certificate-popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        display: none;
-    }
-  
-    .popup-content {
-        position: relative;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 90%;
-        max-height: 90%;
-        overflow: auto;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        animation: zoomIn 0.3s ease;
-    }
-  
-    .popup-content img {
-        max-width: 100%;
-        max-height: 80vh;
-        border-radius: 8px;
-    }
-  
-    .popup-close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-        font-weight: bold;
-    }
-  
-    @keyframes zoomIn {
-        from {
-            transform: scale(0.5);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-  </style>
-  <!-- <-----------------------------certificate zone---------------------------> 
-  <div id="certificates">
-      <div class="container">
-          <h1 class="sub-title">Certificate Zone</h1>
-          <div class="certificates-list">
-              <!-- Visible certificates -->
-              <div class="certificate animate-on-scroll">
-                  <img src="images/certificate1.png" alt="Certificate 1">
-                  <div class="certificate-info">
-                      <h3>AICTE x IBM Internship</h3>
-                      <p>AI & Cloud Technologies</p>
-                  </div>
-              </div>
-              <div class="certificate animate-on-scroll">
-                  <img src="images/certificate2.png" alt="Certificate 2">
-                  <div class="certificate-info">
-                      <h3>Internshala</h3>
-                      <p>Web Development Internship</p>
-                  </div>
-              </div>
-              <div class="certificate animate-on-scroll">
-                  <img src="images/certificate3.png" alt="Certificate 3">
-                  <div class="certificate-info">
-                      <h3>Infosys Springboard</h3>
-                      <p>CSS3 Certification</p>
-                  </div>
-              </div>
-  
-              <!-- Hidden certificates -->
-              <div class="hidden-certificates" style="display: none; flex-wrap: wrap; gap: 20px;">
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate4.png" alt="Certificate 4">
-                      <div class="certificate-info">
-                          <h3>TCS iON Career Edge - Young Professional</h3>
-                          <p>Professional skills development program</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate5.png" alt="Certificate 5">
-                      <div class="certificate-info">
-                          <h3>Great Learning</h3>
-                          <p>Cloud Service Models</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate6.png" alt="Certificate 6">
-                      <div class="certificate-info">
-                          <h3>Coursera Project Network</h3>
-                          <p>GitHub CoPilot for Beginners</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate7.png" alt="Certificate 7">
-                      <div class="certificate-info">
-                          <h3>pinnacle lab</h3>
-                          <p>web devlopment</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate8.png" alt="Certificate 8">
-                      <div class="certificate-info">
-                          <h3>Infosys Springboard</h3>
-                          <p>Python Professional</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate9.png" alt="Certificate 9">
-                      <div class="certificate-info">
-                          <h3>Google UX Design</h3>
-                          <p>Six Certificates</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate10.png" alt="Certificate 10">
-                      <div class="certificate-info">
-                          <h3>Kaggle</h3>
-                          <p>Python Course</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate11.png" alt="Certificate 11">
-                      <div class="certificate-info">
-                          <h3>Coursera</h3>
-                          <p>Cybersecurity Basics</p>
-                      </div>
-                  </div>
-                  <div class="certificate animate-on-scroll">
-                      <img src="images/certificate12.png" alt="Certificate 12">
-                      <div class="certificate-info">
-                          <h3>Udemy</h3>
-                          <p>Machine Learning 101</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-  
-          <a href="#" class="btn" id="show-more-certificates">See more</a>
-          <a href="#" class="btn" id="show-less-certificates" style="display: none;">Show less</a>
-      </div>
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="images/logo.png" alt="Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="logo-fallback" style="display:none;">SWAYAM</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Expertise</a></li>
+      <li><a href="#experience">About</a></li>
+      <li><a href="#why-hire">Why Hire</a></li>
+      <li><a href="#portfolio">Projects</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="images/Swayam_Sankar_Nayak_Resume.pdf" target="_blank" class="nav-resume-btn">Resume</a></li>
+      <li class="nav-close-li"><i class="fa-solid fa-xmark nav-close" onclick="closeNav()"></i></li>
+    </ul>
+    <button class="hamburger" onclick="openNav()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  
-  <!-- Popup Container -->
-  <div class="certificate-popup" id="certificatePopup">
-      <div class="popup-content">
-          <span class="popup-close" id="popupClose">&times;</span>
-          <img src="" alt="Certificate Preview" id="popupImage">
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-blob"></div>
+  <div class="hero-inner">
+    <div class="hero-text" data-reveal>
+      <p class="hero-eyebrow">Full Stack Developer &amp; Designer</p>
+      <h1 class="hero-title">I'm <em>Swayam,</em><br>Web Developer</h1>
+      <p class="hero-desc">Crafting pixel-perfect, full-stack experiences from Odisha, India — blending code, design, and creativity.</p>
+      <div class="hero-actions">
+        <a href="#portfolio" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-outline">Hire Me</a>
       </div>
-  </div>
-  
-  <script>
-      // Show more/less certificates
-      document.getElementById('show-more-certificates').addEventListener('click', function (e) {
-          e.preventDefault();
-          const hiddenCertificates = document.querySelector('.hidden-certificates');
-          hiddenCertificates.style.display = 'flex';
-          this.style.display = 'none';
-          document.getElementById('show-less-certificates').style.display = 'block';
-  
-          const hiddenItems = hiddenCertificates.querySelectorAll('.certificate');
-          hiddenItems.forEach((item, index) => {
-              setTimeout(() => {
-                  item.style.opacity = '1';
-                  item.style.transform = 'translateY(0)';
-              }, index * 100);
-          });
-      });
-  
-      document.getElementById('show-less-certificates').addEventListener('click', function (e) {
-          e.preventDefault();
-          const hiddenCertificates = document.querySelector('.hidden-certificates');
-          hiddenCertificates.style.display = 'none';
-          this.style.display = 'none';
-          document.getElementById('show-more-certificates').style.display = 'block';
-      });
-  
-      // Certificate popup logic
-      const certificates = document.querySelectorAll('.certificate img');
-      const popup = document.getElementById('certificatePopup');
-      const popupImage = document.getElementById('popupImage');
-      const popupClose = document.getElementById('popupClose');
-  
-      certificates.forEach(cert => {
-          cert.addEventListener('click', () => {
-              popupImage.src = cert.src;
-              popup.style.display = 'flex';
-          });
-      });
-  
-      popupClose.addEventListener('click', () => {
-          popup.style.display = 'none';
-          popupImage.src = '';
-      });
-  
-      // Optional: close popup when clicking outside the content
-      popup.addEventListener('click', (e) => {
-          if (e.target === popup) {
-              popup.style.display = 'none';
-              popupImage.src = '';
-          }
-      });
-  </script>
-  
-      <!------------------achievements------------------>
-      <div id="achievements">
-        <div class="container">
-            <h1 class="sub-title">My Achievements</h1>
-            <div class="achievement-list">
-                <div class="achievement animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <h3>💻 Open Source Contributor</h3>
-                    <p>Contributed to major open source projects with 500+ commits and 10+ accepted pull requests.</p>
-                </div>
-                <div class="achievement animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <h3>📸 Photography Club President</h3>
-                    <p>As Photography Club President at CGU, organized multiple workshops and exhibitions, effectively led the team, and created a comfortable environment for creative collaboration.</p>
-                </div>
-                <div class="achievement animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                    <h3>👨‍💻 Hackathon Participant</h3>
-                    <p>Participated in Smart India Hackathon (SIH), qualified the college round, and worked on a project focused on traffic management system development.</p>
-                </div>
-                <div class="hidden-achievements" style="display: none;">
-                    <div class="achievement animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-                        <h3>☁️ Google Cloud Certified</h3>
-                        <p>Earned the Google Cloud Professional Cloud Architect certification, demonstrating expertise in designing and managing secure, scalable cloud solutions.</p>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="btn" id="show-more-achievements">See more</a>
-            <a href="#" class="btn" id="show-less-achievements" style="display: none;">Show less</a>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-num">12+</span><span class="hstat-label">Projects</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat">
+          <span class="hstat-num">5+</span>
+          <span class="hstat-label">Frameworks<br>Mastered</span>
         </div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num">10+</span><span class="hstat-label">Certificates</span></div>
       </div>
-
-      <script>
-        document.getElementById('show-more-achievements').addEventListener('click', function(e) {
-            e.preventDefault();
-            const hiddenAchievements = document.querySelector('.hidden-achievements');
-            hiddenAchievements.style.display = 'block';
-            this.style.display = 'none';
-            document.getElementById('show-less-achievements').style.display = 'block';
-            
-            // Trigger animation for hidden achievements
-            const hiddenItems = hiddenAchievements.querySelectorAll('.achievement');
-            hiddenItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
-
-        document.getElementById('show-less-achievements').addEventListener('click', function(e) {
-            e.preventDefault();
-            const hiddenAchievements = document.querySelector('.hidden-achievements');
-            hiddenAchievements.style.display = 'none';
-            this.style.display = 'none';
-            document.getElementById('show-more-achievements').style.display = 'block';
-        });
-      </script>
-
-      <!------------------achievements gallery------------------>
-      <div id="achievements-gallery" class="animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-        <div class="container">
-          <h1 class="sub-title">Achievements Gallery</h1>
-          <div class="carousel">
-            <div class="carousel-track">
-              <div class="carousel-slide active"><img src="images/achievement1.jpg" alt="Hackathon Winner"></div>
-              <div class="carousel-slide"><img src="images/achievement2.jpg" alt="Open Source Contribution"></div>
-              <div class="carousel-slide"><img src="images/achievement3.jpg" alt="Photography Exhibition"></div>
-              <div class="carousel-slide"><img src="images/achievement4.jpg" alt="Technical Writing"></div>
-              <div class="carousel-slide"><img src="images/achievement5.jpg" alt="Dean's List Award"></div>
-              <div class="carousel-slide"><img src="images/achievement6.jpg" alt="Hackathon Participation"></div>
-              <div class="carousel-slide"><img src="images/achievement7.jpg" alt="Leadership Award"></div>
-              <div class="carousel-slide"><img src="images/achievement8.jpg" alt="Research Publication"></div>
-            </div>
-      
-            <!-- Navigation Buttons -->
-            <button class="carousel-btn prev">&#10094;</button>
-            <button class="carousel-btn next">&#10095;</button>
-          </div>
-        </div>
-      </div>
-
-      <!------------------contact------------------>
-      <div id="contact" class="animate-on-scroll" style="opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
-        <div class="container">
-            <div class="row">
-                <div class="contact-left">
-                    <h1 class="sub-title">Contact me</h1>
-                    <p><i class="fa-solid fa-paper-plane"></i>swayamsankar898@gmail.com</p>
-                    <p><i class="fa-solid fa-square-phone"></i>9040468546</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/swayam_sankar" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/swayam-sankar-nayak-86b048292?" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="https://twitter.com/SwayamSankar3" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="https://github.com/swayamsankar" target="_blank"><i class="fa-brands fa-github"></i></a>
-                    </div>
-                    <a href="images/Swayam_Sankar_Nayak_Resume.pdf" download class="btn btn2">Download Resume</a>
-                </div>
-                <div class="contact-right">
-                    <form name="submit-to-google-sheet">
-                        <input type="text" name="Name" placeholder="Your Name" required>
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="Message" id="" rows="6" placeholder="Your message"></textarea>
-                        <button type="submit" class="btn btn2">Submit</button>
-                    </form>
-                    <span id="msg"></span>
-                </div>   
-            </div>
-        </div> 
-        <div class="copyright">
-            <p>copyright @ swayam.my with<i class="fa-solid fa-heart"></i> original content</p>
-        </div>
     </div>
-    
-    <script src="script.js"></script>
-    </body>
+    <div class="hero-image" data-reveal-delay>
+      <div class="hero-img-ring"></div>
+      <img src="images/final_bg.png" alt="Swayam Sankar Nayak" class="hero-photo">
+      <div class="hero-badge hero-badge-top">
+        <i class="fa-solid fa-code"></i>
+        <span>Full Stack Dev</span>
+      </div>
+      <div class="hero-badge hero-badge-bot">
+        <i class="fa-solid fa-camera"></i>
+        <span>Multimedia Designer</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ========== MY SERVICES ========== -->
+<section class="services-section" id="services">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">What I Do</p>
+      <h2 class="section-title">My <em>Services</em></h2>
+      <p class="section-sub">End-to-end digital solutions — from idea to deployment, beautifully crafted.</p>
+    </div>
+    <div class="services-grid">
+      <div class="srv-card" data-reveal>
+        <div class="srv-icon"><i class="fa-solid fa-code"></i></div>
+        <h3>Web Development</h3>
+        <p>Full-stack web apps using React, Node.js, Express, MySQL, and MongoDB. Clean code, fast load, great UX.</p>
+        <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="srv-card" data-reveal>
+        <div class="srv-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+        <h3>UI/UX Design</h3>
+        <p>Intuitive, modern interfaces designed in Figma, Canva, and Adobe Express. User-centered. Visually stunning.</p>
+        <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="srv-card featured-srv" data-reveal>
+        <div class="srv-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>AI / ML Solutions</h3>
+        <p>Building intelligent applications using TensorFlow, PyTorch and Keras for real-world problems, and also development using this in multiple web projects.</p>
+        <a href="#portfolio" class="srv-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="srv-card" data-reveal>
+        <div class="srv-icon"><i class="fa-solid fa-camera"></i></div>
+        <h3>Media &amp; Visual Production</h3>
+        <p>Professional event photography, videography, video editing, and organized documentary creation.</p>
+        <a href="https://eventphotographybooksite.netlify.app/" target="_blank" class="srv-link">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPERIENCE ========== -->
+<section class="experience-section" id="experience">
+  <div class="section-inner exp-inner">
+    <div class="exp-left" data-reveal>
+      <p class="section-eyebrow">Background</p>
+      <h2 class="section-title">My Work<br><em>Experience</em></h2>
+      <p class="exp-intro">A journey of learning, building and leading — from internships to founding my own ventures.</p>
+      <a href="images/Swayam_Sankar_Nayak_Resume.pdf" target="_blank" class="btn-primary exp-cv-btn">Download CV</a>
+    </div>
+    <div class="exp-timeline" data-reveal-delay>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <span class="exp-year">2025</span>
+          <h4>Working on Multiple Internships</h4>
+          <p>IBM · AICTE · Pinnacle Lab</p>
+          <span class="exp-tag">Development</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <span class="exp-year">2024-25</span>
+          <h4>Photography Club President</h4>
+          <p>CVRGU — Lead Member, Literary Club</p>
+          <span class="exp-tag">Leadership</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <span class="exp-year">2024-25</span>
+          <h4>Lead UX Designer</h4>
+          <p>College Graphic Design Team</p>
+          <span class="exp-tag">Design</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <span class="exp-year">2023–24</span>
+          <h4>Multiple Certificates</h4>
+          <p>Oracle · Google · Infosys Springboard · Deloitte · and more</p>
+          <span class="exp-tag">Certification</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY HIRE ME ========== -->
+<section class="why-section" id="why-hire">
+  <div class="section-inner why-inner">
+    <div class="why-image-col" data-reveal>
+      <div class="why-img-bg"></div>
+      <img src="images/picofme (27).png" alt="Swayam" class="why-photo">
+      <div class="why-exp-pill">
+        <strong>3+</strong>
+        <span>Years of Experience</span>
+      </div>
+    </div>
+    <div class="why-content" data-reveal-delay>
+      <p class="section-eyebrow">The Value I Bring</p>
+      <h2 class="section-title">Why Hire <em>Me?</em></h2>
+      <p class="why-desc">I combine technical depth with creative vision — delivering projects that look great, perform fast, and solve real problems.</p>
+      <div class="why-stats-row">
+        <div class="why-stat">
+          <strong class="counter" data-target="12">0</strong><span>+</span>
+          <p>Projects<br>Completed</p>
+        </div>
+        <div class="why-stat">
+          <strong class="counter" data-target="5">0</strong><span>+</span>
+          <p>Frameworks<br>Mastered</p>
+        </div>
+        <div class="why-stat">
+          <strong class="counter" data-target="10">0</strong><span>+</span>
+          <p>Certificates<br>Earned</p>
+        </div>
+      </div>
+      <div class="why-features">
+        <div class="why-feat"><i class="fa-solid fa-check"></i><span>Full Stack — Frontend to Backend</span></div>
+        <div class="why-feat"><i class="fa-solid fa-check"></i><span>Strong Design Sense (Figma, Canva, many AI platforms)</span></div>
+        <div class="why-feat"><i class="fa-solid fa-check"></i><span>Fast delivery with clean, scalable, and responsive code for a better user experience</span></div>
+        <div class="why-feat"><i class="fa-solid fa-check"></i><span>Skilled in AI/ML integration, data analysis (Excel, Power BI, tabular modeling), and creative problem-solving</span></div>
+      </div>
+      <a href="#contact" class="btn-primary why-hire-btn">Hire Me Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PORTFOLIO ========== -->
+<section class="portfolio-section" id="portfolio">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">My Work</p>
+      <h2 class="section-title">Let's Have a Look at<br>My <em>Portfolio</em></h2>
+    </div>
+    <div class="portfolio-tabs" data-reveal>
+      <button class="ptab active" onclick="filterProjects('all', this)">All</button>
+      <button class="ptab" onclick="filterProjects('web', this)">Web</button>
+      <button class="ptab" onclick="filterProjects('design', this)">Design</button>
+      <button class="ptab" onclick="filterProjects('group', this)">Group</button>
+      <button class="ptab" onclick="filterProjects('ai', this)">AI</button>
+    </div>
+    <div class="portfolio-grid" id="portfolio-grid">
+      <div class="pcard" data-cat="web" data-reveal>
+        <img src="images/work-1.png" alt="Thrilling Frames">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Photography</span>
+          <h4>Thrilling Frames Media</h4>
+          <p>Event photography &amp; booking platform</p>
+          <a href="https://eventphotographybooksite.netlify.app/" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard" data-cat="web" data-reveal>
+        <img src="images/work-2.png" alt="Gastronome">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Full Stack</span>
+          <h4>Gastronome</h4>
+          <p>Restaurant booking &amp; ordering system</p>
+          <a href="https://restaurant-website-k7jb.onrender.com" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard" data-cat="web" data-reveal>
+        <img src="images/work-3.png" alt="Calculator">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">React</span>
+          <h4>Scientific Calculator</h4>
+          <p>React-based advanced math calculator</p>
+          <a href="https://reactscientificcalculator.netlify.app/" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard" data-cat="design" data-reveal>
+        <img src="images/work-4.jpeg" alt="Portfolio">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Design</span>
+          <h4>Portfolio Website</h4>
+          <p>Responsive portfolio with animations</p>
+          <a href="#" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard portfolio-hide" data-cat="web" data-reveal>
+        <img src="images/work-5.png" alt="TECHSWAY">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">E-Commerce</span>
+          <h4>TECHSWAY</h4>
+          <p>Full-stack gadgets e-commerce store</p>
+          <a href="https://github.com/swayamsankar/swayams-digital-mart" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard portfolio-hide" data-cat="ai" data-reveal>
+        <img src="images/work-8.png" alt="Expenses Intelligence AI">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">AI</span>
+          <h4>Expenses Intelligence AI</h4>
+          <p>Smart expense tracking and analytics powered by AI</p>
+          <a href="https://github.com/swayamsankar/Expense_Intelligence_Ai" target="_blank" class="pcard-link"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
+        <img src="images/group-work-1.png" alt="Apartment">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Group</span>
+          <h4>Apartment Management</h4>
+          <p>Tenant &amp; complaint tracking system</p>
+          <a href="https://github.com/swayamsankar/Apartmentsystem" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
+        <img src="images/group-work-2.png" alt="Student">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Group</span>
+          <h4>Student Management</h4>
+          <p>Student records &amp; personal details</p>
+          <a href="https://github.com/swayamsankar/Students-Record-Management" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
+        <img src="images/group-work-3.png" alt="Traffic">
+        <div class="pcard-overlay">
+          <span class="pcard-cat">Group</span>
+          <h4>Traffic Management</h4>
+          <p>Urban traffic monitoring &amp; optimization</p>
+          <a href="https://github.com/swayamsankar/Traffic_Management_System" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-reveal>
+      <button class="btn-outline" id="portfolio-more-btn" onclick="togglePortfolio(this)">Show More</button>
+    </div>
+  </div>
+</section>
+<script>
+  // Show more/less functionality for portfolio section
+  function togglePortfolio(btn) {
+    var hiddenCards = document.querySelectorAll('.portfolio-grid .portfolio-hide');
+    var showing = btn.getAttribute('data-showing') === 'true';
+    hiddenCards.forEach(function(card){
+      if(showing){
+        card.style.display = "none";
+      } else {
+        card.style.display = "";
+      }
+    });
+    if(showing){
+      btn.innerText = "Show More";
+      btn.setAttribute('data-showing', 'false');
+    } else {
+      btn.innerText = "Show Less";
+      btn.setAttribute('data-showing', 'true');
+    }
+  }
+
+  // Initially hide the extra cards
+  document.addEventListener('DOMContentLoaded', function() {
+    var hiddenCards = document.querySelectorAll('.portfolio-grid .portfolio-hide');
+    hiddenCards.forEach(function(card){
+      card.style.display = "none";
+    });
+    var btn = document.getElementById('portfolio-more-btn');
+    if(btn){
+      btn.setAttribute('data-showing', 'false');
+    }
+  });
+</script>
+
+<!-- ========== MARQUEE ========== -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Web Development</span><span class="mx">✦</span>
+    <span>UI/UX Design</span><span class="mx">✦</span>
+    <span>React · Node.js</span><span class="mx">✦</span>
+    <span>AI / ML</span><span class="mx">✦</span>
+    <span>SQL</span><span class="mx">✦</span>
+    <span>Full Stack</span><span class="mx">✦</span>
+    <span>MongoDB</span><span class="mx">✦</span>
+    <span>Wireframe</span><span class="mx">✦</span>
+    <span>App Design</span><span class="mx">✦</span>
+    <span>Figma</span><span class="mx">✦</span>
+    <span>UI/UX Design</span><span class="mx">✦</span>
+    <span>React · Node.js</span><span class="mx">✦</span>
+    <span>Canva</span><span class="mx">✦</span>
+    <span>Video Editor</span><span class="mx">✦</span>
+    <span>Postman</span><span class="mx">✦</span>
+    <span>Git &amp; GitLab</span><span class="mx">✦</span>
+    <span>SDLC</span><span class="mx">✦</span>
+    <span>Agile</span><span class="mx">✦</span>
+    <span>Java</span><span class="mx">✦</span>
+    <span>OOP</span><span class="mx">✦</span>
+    <span>Python</span><span class="mx">✦</span>
+    <span>AWS Cloud</span><span class="mx">✦</span>
+    <span>Debugging</span><span class="mx">✦</span>
+    <span>Problem Solving</span><span class="mx">✦</span>
+  </div>
+</div>
+
+<!-- ========== CERTIFICATES ========== -->
+<section class="certs-section" id="certificates">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">My Credentials</p>
+      <h2 class="section-title">Certificate <em>Zone</em></h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card" data-reveal><img src="images/certificate1.png" alt="Cert 1"><div class="cert-info"><h4>AICTE x IBM Internship</h4><p>AI &amp; Cloud Technologies</p></div></div>
+      <div class="cert-card" data-reveal><img src="images/certificate2.png" alt="Cert 2"><div class="cert-info"><h4>Internshala</h4><p>Web Development Internship</p></div></div>
+      <div class="cert-card" data-reveal><img src="images/certificate3.png" alt="Cert 3"><div class="cert-info"><h4>Infosys Springboard</h4><p>CSS3 Certification</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate4.png" alt="Cert 4"><div class="cert-info"><h4>TCS iON Career Edge</h4><p>Young Professional</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate5.jpeg" alt="Cert 5"><div class="cert-info"><h4>Oracle University</h4><p>Oracle Cloud Infrastructure 2025 Certified Al Foundations Associate</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate6.jpeg" alt="Cert 6"><div class="cert-info"><h4>SAP Learning</h4><p>Learning Basic ABAP Programming</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate7.png" alt="Cert 7"><div class="cert-info"><h4>Pinnacle Lab</h4><p>Web Development</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate8.png" alt="Cert 8"><div class="cert-info"><h4>Infosys Springboard</h4><p>Python Professional</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate9.png" alt="Cert 9"><div class="cert-info"><h4>Google UX Design</h4><p>Six Certificates</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate10.png" alt="Cert 10"><div class="cert-info"><h4>Kaggle</h4><p>Python Course</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate11.png" alt="Cert 11"><div class="cert-info"><h4>Coursera</h4><p>Cybersecurity Basics</p></div></div>
+      <div class="cert-card hidden-cert" data-reveal><img src="images/certificate12.png" alt="Cert 12"><div class="cert-info"><h4>Udemy</h4><p>Machine Learning 101</p></div></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-reveal>
+      <button class="btn-outline" id="cert-more-btn" onclick="toggleCerts(this)">See More Certificates</button>
+    </div>
+  </div>
+</section>
+
+<div class="cert-popup" id="cert-popup">
+  <div class="cert-popup-inner">
+    <button class="cert-popup-close" onclick="closeCertPopup()">&times;</button>
+    <img src="" id="cert-popup-img" alt="Certificate">
+  </div>
+</div>
+
+<!-- ========== ACHIEVEMENTS ========== -->
+<section class="achieve-section" id="achievements">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">Recognition</p>
+      <h2 class="section-title">My <em>Achievements</em></h2>
+    </div>
+    <div class="achieve-grid">
+      <div class="ach-card" data-reveal><div class="ach-icon">💻</div><h4>Open Source Contributor</h4><p>500+ commits and 10+ accepted pull requests across major open source projects.</p></div>
+      <div class="ach-card" data-reveal><div class="ach-icon">📸</div><h4>Photography Club President</h4><p>Organized workshops and exhibitions at CVRGU. Led the creative team for impactful events.</p></div>
+      <div class="ach-card" data-reveal><div class="ach-icon">👨‍💻</div><h4>Hackathon Participant</h4><p>Qualified Smart India Hackathon college round with a traffic management system project.</p></div>
+      <div class="ach-card" data-reveal><div class="ach-icon">☁️</div><h4>Google Cloud Certified</h4><p>Earned Google Cloud Professional certification for designing secure, scalable cloud solutions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALLERY CAROUSEL ========== -->
+<section class="gallery-section" id="gallery">
+  <div class="section-inner">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">Visual Diary</p>
+      <h2 class="section-title">Achievements <em>Gallery</em></h2>
+    </div>
+    <div class="carousel-wrap" data-reveal>
+      <div class="carousel" id="carousel">
+        <div class="c-slide active"><img src="images/achievement1.jpg" alt="Achievement 1"></div>
+        <div class="c-slide"><img src="images/achievement2.jpg" alt="Achievement 2"></div>
+        <div class="c-slide"><img src="images/achievement3.jpg" alt="Achievement 3"></div>
+        <div class="c-slide"><img src="images/achievement4.jpg" alt="Achievement 4"></div>
+        <div class="c-slide"><img src="images/achievement5.jpg" alt="Achievement 5"></div>
+        <div class="c-slide"><img src="images/achievement6.jpg" alt="Achievement 6"></div>
+        <div class="c-slide"><img src="images/achievement7.jpg" alt="Achievement 7"></div>
+        <div class="c-slide"><img src="images/achievement8.jpg" alt="Achievement 8"></div>
+      </div>
+      <button class="c-btn c-prev" onclick="prevSlide()">&#10094;</button>
+      <button class="c-btn c-next" onclick="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA BANNER ========== -->
+<section class="cta-banner" id="cta">
+  <div class="cta-inner" data-reveal>
+    <div class="cta-text">
+      <h2>Have an Awesome Project Idea?<br><em>Let's Discuss</em></h2>
+      <p>Whether it's a web app, AI solution, or creative project — I'm ready to build it with you.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:swayamsankar898@gmail.com" class="btn-primary">Start a Project</a>
+      <a href="images/Swayam_Sankar_Nayak_Resume.pdf" target="_blank" class="btn-outline-light">Get My CV</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="contact-section" id="contact">
+  <div class="section-inner contact-inner">
+    <div class="contact-left" data-reveal>
+      <p class="section-eyebrow">Get In Touch</p>
+      <h2 class="section-title">Let's <em>Connect There</em></h2>
+      <p class="contact-desc">Have a project in mind, want to collaborate, or just want to say hello? My inbox is always open.</p>
+      <div class="contact-details">
+        <div class="cdetail"><i class="fa-solid fa-paper-plane"></i><span>swayamsankar898@gmail.com</span></div>
+        <div class="cdetail"><i class="fa-solid fa-phone"></i><span>+91 9040468546</span></div>
+        <div class="cdetail"><i class="fa-solid fa-location-dot"></i><span>Odisha, India</span></div>
+      </div>
+      <div class="social-row">
+        <a href="https://www.instagram.com/swayam_sankar" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/swayam-sankar-nayak-86b048292" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://twitter.com/SwayamSankar3" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://github.com/swayamsankar" target="_blank"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+    <div class="contact-right" data-reveal-delay>
+      <form name="submit-to-google-sheet" class="contact-form">
+        <div class="form-row">
+          <input type="text" name="Name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        <input type="text" name="Subject" placeholder="Subject">
+        <textarea name="Message" rows="5" placeholder="Your Message"></textarea>
+        <button type="submit" class="btn-primary form-submit">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+        <span id="msg"></span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="images/logo.png" alt="Logo" class="footer-logo-img" onerror="this.style.display='none'">
+      <p>Building the web, one pixel at a time.</p>
+    </div>
+    <div class="footer-links">
+      <h5>Navigation</h5>
+      <a href="#hero">Home</a>
+      <a href="#services">Services</a>
+      <a href="#experience">About</a>
+      <a href="#portfolio">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-links">
+      <h5>Projects</h5>
+      <a href="https://github.com/swayamsankar/Expense_Intelligence_Ai" target="_blank">Expenses Intelligence AI</a>
+      <a href="https://github.com/swayamsankar/swayams-digital-mart" target="_blank">Techsway</a>
+      <a href="https://restaurant-website-k7jb.onrender.com" target="_blank">Gastronome</a>
+      <a href="https://github.com/swayamsankar/Factify" target="_blank">Factify</a>
+    </div>
+    <div class="footer-links">
+      <h5>Follow Me</h5>
+      <a href="https://www.instagram.com/swayam_sankar" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/in/swayam-sankar-nayak-86b048292" target="_blank">LinkedIn</a>
+      <a href="https://github.com/swayamsankar" target="_blank">GitHub</a>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <p>© 2025 Swayam Sankar Nayak · Made with <i class="fa-solid fa-heart"></i> in Odisha, India</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
 </html>
