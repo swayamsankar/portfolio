@@ -70,7 +70,8 @@ To run the project locally:
 
 ## 🖼️ Project Preview
 
-<img width="1896" height="911" alt="image" src="https://github.com/user-attachments/assets/d80e279b-3eac-4e4a-b6b3-2fd303d89b3e" />
+<img width="1880" height="908" alt="image" src="https://github.com/user-attachments/assets/754ab0e8-ec1b-4bb9-bb68-f379a51dfa3f" />
+
 
 
 ---
