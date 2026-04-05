@@ -166,9 +166,12 @@ window.addEventListener('scroll', () => {
       }
   
       try {
-        const res = await fetch(scriptURL, { method:"POST", body: new FormData(form) });
-        const data = await res.json();
-        msg.textContent = data.message || "Message sent successfully! 🎉";
+        await fetch(scriptURL, {
+          method: "POST",
+          body: new FormData(form),
+          mode: "no-cors"
+        });
+        msg.textContent = "Message sent successfully! 🎉";
         msg.style.color = "#22c55e";
         form.reset();
       } catch(err) {
