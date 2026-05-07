@@ -40,7 +40,10 @@
   <div class="hero-inner">
     <div class="hero-text" data-reveal>
       <p class="hero-eyebrow">Full Stack Developer &amp; Designer</p>
-      <h1 class="hero-title">I'm <em>Swayam,</em><br>Web Developer</h1>
+      <h1 class="hero-title">
+        <span class="blur-text" id="blurHero">I'm <em>Swayam,</em></span><br>
+        <span class="shiny-text-el">Web Developer</span>
+      </h1>
       <p class="hero-desc">Crafting pixel-perfect, full-stack experiences from Odisha, India — blending code, design, and creativity.</p>
       <div class="hero-actions">
         <a href="#portfolio" class="btn-primary">View Projects</a>
@@ -167,12 +170,55 @@
 <section class="why-section" id="why-hire">
   <div class="section-inner why-inner">
     <div class="why-image-col" data-reveal>
-      <div class="why-img-bg"></div>
-      <img src="images/picofme (27).png" alt="Swayam" class="why-photo">
-      <div class="why-exp-pill">
-        <strong>3+</strong>
-        <span>Years of Experience</span>
+
+      <div class="photo-card">
+
+        <div class="corner-tl"></div>
+
+        <div class="corner-br"></div>
+
+        <div class="scan-line"></div>
+
+        <img src="images/picofme (27).png" alt="Swayam" class="photo-card-img">
+
+        <div class="photo-card-body">
+
+          <div class="photo-name">Swayam</div>
+
+          <div class="type-line">
+
+            <span class="type-label">~/</span>
+
+            <span class="type-text" id="typed"></span>
+
+            <span class="type-cursor"></span>
+
+          </div>
+
+          <div class="photo-tags">
+
+            <span class="tag">React</span>
+
+            <span class="tag">Three.js</span>
+
+            <span class="tag">UI/UX</span>
+
+          </div>
+
+        </div>
+
       </div>
+
+      <div class="why-exp-pill">
+
+        <strong>3+</strong>
+
+        <span>Years of<br>Experience</span>
+
+      </div>
+
+      <div class="glow-base"></div>
+
     </div>
     <div class="why-content" data-reveal-delay>
       <p class="section-eyebrow">The Value I Bring</p>
@@ -205,139 +251,50 @@
 
 <!-- ========== PORTFOLIO ========== -->
 <section class="portfolio-section" id="portfolio">
-  <div class="section-inner">
-    <div class="section-head" data-reveal>
-      <p class="section-eyebrow">My Work</p>
-      <h2 class="section-title">Let's Have a Look at<br>My <em>Portfolio</em></h2>
-    </div>
-    <div class="portfolio-tabs" data-reveal>
-      <button class="ptab active" onclick="filterProjects('all', this)">All</button>
-      <button class="ptab" onclick="filterProjects('web', this)">Web</button>
-      <button class="ptab" onclick="filterProjects('design', this)">Design</button>
-      <button class="ptab" onclick="filterProjects('group', this)">Group</button>
-      <button class="ptab" onclick="filterProjects('ai', this)">AI</button>
-    </div>
-    <div class="portfolio-grid" id="portfolio-grid">
-      <div class="pcard" data-cat="web" data-reveal>
-        <img src="images/work-1.png" alt="Thrilling Frames">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Photography</span>
-          <h4>Thrilling Frames Media</h4>
-          <p>Event photography &amp; booking platform</p>
-          <a href="https://eventphotographybooksite.netlify.app/" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard" data-cat="web" data-reveal>
-        <img src="images/work-2.png" alt="Gastronome">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Full Stack</span>
-          <h4>Gastronome</h4>
-          <p>Restaurant booking &amp; ordering system</p>
-          <a href="https://restaurant-website-k7jb.onrender.com" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard" data-cat="web" data-reveal>
-        <img src="images/work-3.png" alt="Calculator">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">React</span>
-          <h4>Scientific Calculator</h4>
-          <p>React-based advanced math calculator</p>
-          <a href="https://reactscientificcalculator.netlify.app/" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard" data-cat="design" data-reveal>
-        <img src="images/work-4.jpeg" alt="Portfolio">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Design</span>
-          <h4>Portfolio Website</h4>
-          <p>Responsive portfolio with animations</p>
-          <a href="#" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard portfolio-hide" data-cat="web" data-reveal>
-        <img src="images/work-5.png" alt="TECHSWAY">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">E-Commerce</span>
-          <h4>TECHSWAY</h4>
-          <p>Full-stack gadgets e-commerce store</p>
-          <a href="https://github.com/swayamsankar/swayams-digital-mart" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard portfolio-hide" data-cat="ai" data-reveal>
-        <img src="images/work-8.png" alt="Expenses Intelligence AI">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">AI</span>
-          <h4>Expenses Intelligence AI</h4>
-          <p>Smart expense tracking and analytics powered by AI</p>
-          <a href="https://github.com/swayamsankar/Expense_Intelligence_Ai" target="_blank" class="pcard-link"><i class="fa-brands fa-github"></i></a>
-        </div>
-      </div>
-      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
-        <img src="images/group-work-1.png" alt="Apartment">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Group</span>
-          <h4>Apartment Management</h4>
-          <p>Tenant &amp; complaint tracking system</p>
-          <a href="https://github.com/swayamsankar/Apartmentsystem" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
-        <img src="images/group-work-2.png" alt="Student">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Group</span>
-          <h4>Student Management</h4>
-          <p>Student records &amp; personal details</p>
-          <a href="https://github.com/swayamsankar/Students-Record-Management" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-      <div class="pcard portfolio-hide" data-cat="group" data-reveal>
-        <img src="images/group-work-3.png" alt="Traffic">
-        <div class="pcard-overlay">
-          <span class="pcard-cat">Group</span>
-          <h4>Traffic Management</h4>
-          <p>Urban traffic monitoring &amp; optimization</p>
-          <a href="https://github.com/swayamsankar/Traffic_Management_System" target="_blank" class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:40px;" data-reveal>
-      <button class="btn-outline" id="portfolio-more-btn" onclick="togglePortfolio(this)">Show More</button>
-    </div>
-  </div>
-</section>
-<script>
-  // Show more/less functionality for portfolio section
-  function togglePortfolio(btn) {
-    var hiddenCards = document.querySelectorAll('.portfolio-grid .portfolio-hide');
-    var showing = btn.getAttribute('data-showing') === 'true';
-    hiddenCards.forEach(function(card){
-      if(showing){
-        card.style.display = "none";
-      } else {
-        card.style.display = "";
-      }
-    });
-    if(showing){
-      btn.innerText = "Show More";
-      btn.setAttribute('data-showing', 'false');
-    } else {
-      btn.innerText = "Show Less";
-      btn.setAttribute('data-showing', 'true');
-    }
-  }
 
-  // Initially hide the extra cards
-  document.addEventListener('DOMContentLoaded', function() {
-    var hiddenCards = document.querySelectorAll('.portfolio-grid .portfolio-hide');
-    hiddenCards.forEach(function(card){
-      card.style.display = "none";
-    });
-    var btn = document.getElementById('portfolio-more-btn');
-    if(btn){
-      btn.setAttribute('data-showing', 'false');
-    }
-  });
-</script>
+  <div class="section-inner">
+
+    <div class="section-head" data-reveal>
+
+      <p class="section-eyebrow">My Work</p>
+
+      <h2 class="section-title">Let's Have a Look at<br>My <em>Portfolio</em></h2>
+
+    </div>
+
+    <div class="portfolio-tabs" id="portfolio-tabs" data-reveal>
+
+      <button class="ptab active" data-cat="all">All</button>
+
+      <button class="ptab" data-cat="web">Web</button>
+
+      <button class="ptab" data-cat="design">Design</button>
+
+      <button class="ptab" data-cat="group">Group</button>
+
+      <button class="ptab" data-cat="ai">AI</button>
+
+    </div>
+
+    <div class="stack-layout" data-reveal>
+
+      <div class="stack-wrapper">
+
+        <div class="stack-container" id="stack-container"></div>
+
+        <p class="stack-hint">click or drag to explore</p>
+
+      </div>
+
+      <div class="stack-info" id="stack-info"></div>
+
+    </div>
+
+    <div class="stack-dots" id="stack-dots"></div>
+
+  </div>
+
+</section>
 
 <!-- ========== MARQUEE ========== -->
 <div class="marquee-strip">

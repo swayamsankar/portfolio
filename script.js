@@ -2,6 +2,82 @@
    SWAYAM PORTFOLIO — script.js
    ============================================================ */
 
+// ── Blur hero text word-by-word entrance effect ───────────────
+(function () {
+  const container = document.getElementById('blurHero');
+  if (!container) return;
+
+  // Wrap each word, preserve <em> as one "word"
+  // Copy childNodes to array because we'll be modifying DOM
+  Array.from(container.childNodes).forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Text node: wrap each word in a span.blur-word
+      const words = node.textContent.split(/(\s+)/);
+      const frag = document.createDocumentFragment();
+      words.forEach(w => {
+        if (!w.trim()) {
+          // Preserve whitespace (renders spaces)
+          frag.appendChild(document.createTextNode(w));
+          return;
+        }
+        const span = document.createElement('span');
+        span.className = 'blur-word';
+        span.textContent = w;
+        frag.appendChild(span);
+      });
+      container.replaceChild(frag, node);
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // wrap the entire <em> as one blur-word
+      const wrap = document.createElement('span');
+      wrap.className = 'blur-word';
+      node.parentNode.insertBefore(wrap, node);
+      wrap.appendChild(node);
+    }
+  });
+
+  const words = container.querySelectorAll('.blur-word');
+  const delay = 150; // ms between each word, matches BlurText
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    words.forEach((w, i) => {
+      setTimeout(() => w.classList.add('in'), i * delay);
+    });
+    observer.disconnect();
+  }, { threshold: 0.1 });
+
+  observer.observe(container);
+})();
+
+// ── Typed effect for roles in Hero section ─────────────────────
+(function () {
+  const roles = [
+    "Full Stack Developer",
+    "Creative Coder",
+    "UI / UX Designer",
+    "React Specialist",
+    "3D Web Enthusiast"
+  ];
+  let ri = 0, ci = 0, del = false;
+
+  const el = document.getElementById('typed');
+  if (!el) return;
+
+  function type() {
+    const word = roles[ri];
+    if (!del) {
+      el.textContent = word.slice(0, ++ci);
+      if (ci === word.length) { del = true; setTimeout(type, 1800); return; }
+      setTimeout(type, 90);
+    } else {
+      el.textContent = word.slice(0, --ci);
+      if (ci === 0) { del = false; ri = (ri + 1) % roles.length; setTimeout(type, 400); return; }
+      setTimeout(type, 45);
+    }
+  }
+  type();
+})();
+
 // ── Navbar scroll effect ──────────────────────────────────────
 window.addEventListener('scroll', () => {
     const nb = document.getElementById('navbar');
@@ -63,21 +139,205 @@ window.addEventListener('scroll', () => {
   }
   
   // ── Portfolio filter ──────────────────────────────────────────
-  function filterProjects(cat, btn) {
-    // Update active tab
-    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  
-    document.querySelectorAll('.pcard').forEach(card => {
-      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-        card.classList.remove('hidden');
-        card.style.display = '';
-      } else {
-        card.classList.add('hidden');
-        card.style.display = 'none';
-      }
+  // Modern project stack carousel + tab filter replacement
+(function () {
+
+  /* ── Project data ── */
+  const ALL_PROJECTS = [
+    { cat:'web',    img:'images/work-1.png',      catLabel:'Photography',  title:'Thrilling Frames Media',    desc:'Event photography & booking platform',                link:'https://eventphotographybooksite.netlify.app/',                        gh:false },
+    { cat:'web',    img:'images/work-2.png',      catLabel:'Full Stack',   title:'Gastronome',                desc:'Restaurant booking & ordering system',                link:'https://restaurant-website-k7jb.onrender.com',                         gh:false },
+    { cat:'web',    img:'images/work-3.png',      catLabel:'React',        title:'Scientific Calculator',     desc:'React-based advanced math calculator',                link:'https://reactscientificcalculator.netlify.app/',                        gh:false },
+    { cat:'design', img:'images/work-4.png',     catLabel:'Design',       title:'Portfolio Website',         desc:'Responsive portfolio with animations',                link:'#',                                                                    gh:false },
+    { cat:'design', img:'images/work-9.png', catLabel:'Design', title:'Poster Design Collection', desc:'Modern, eye-catching posters for events and branding', link:'https://drive.google.com/drive/folders/1OzeVcT1GsX3WOi__MCyfih8wRehL8H83?usp=drive_link', gh:false },
+    { cat:'design', img:'images/work-6.png', catLabel:'Design', title:'Brand Guideline', desc:'Professional branding, style guide & assets', link:'https://drive.google.com/drive/folders/1GJg2DWypGS2X1ccn4lJdm8h1nEjZGOXY?usp=drive_link', gh:false },
+    { cat: 'design', img: 'images/work-7.png', catLabel: 'Design', title: 'Logo Design', desc: 'Creative and modern logo concepts', link: 'https://drive.google.com/drive/folders/1ebbBzEp2cmZjcyqll1ttpHS6A1pA4dRM?usp=drive_link', gh: false },
+    { cat:'web',    img:'images/work-5.png',      catLabel:'E-Commerce',   title:'TECHSWAY',                  desc:'Full-stack gadgets e-commerce store',                 link:'https://github.com/swayamsankar/swayams-digital-mart',                 gh:true  },
+    { cat:'ai',     img:'images/work-8.png',      catLabel:'AI',           title:'Expenses Intelligence AI',  desc:'Smart expense tracking and analytics powered by AI',  link:'https://github.com/swayamsankar/Expense_Intelligence_Ai',              gh:true  },
+    { cat:'group',  img:'images/group-work-1.png',catLabel:'Group',        title:'Apartment Management',      desc:'Tenant & complaint tracking system',                  link:'https://github.com/swayamsankar/Apartmentsystem',                      gh:true  },
+    { cat:'group',  img:'images/group-work-2.png',catLabel:'Group',        title:'Student Management',        desc:'Student records & personal details',                  link:'https://github.com/swayamsankar/Students-Record-Management',           gh:true  },
+    { cat:'group',  img:'images/group-work-3.png',catLabel:'Group',        title:'Traffic Management',        desc:'Urban traffic monitoring & optimization',             link:'https://github.com/swayamsankar/Traffic_Management_System',            gh:true  },
+  ];
+
+  /* ── State ── */
+  let filtered = [];
+  let stackOrder = []; // indices into `filtered`; last element = top card
+
+  /* ── Core stack logic ── */
+  function sendToBack() {
+    if (stackOrder.length < 2) return;
+    const top = stackOrder.pop();
+    stackOrder.unshift(top);
+    renderAll();
+  }
+
+  function goTo(idx) {
+    let safety = stackOrder.length * 2;
+    while (stackOrder[stackOrder.length - 1] !== idx && safety-- > 0) {
+      const t = stackOrder.pop();
+      stackOrder.unshift(t);
+    }
+    renderAll();
+  }
+
+  function initStack(projects) {
+    filtered = projects;
+    stackOrder = projects.map((_, i) => i);
+    renderAll();
+  }
+
+  /* ── Render: card stack ── */
+  function renderStack() {
+    const container = document.getElementById('stack-container');
+    container.innerHTML = '';
+    const len = stackOrder.length;
+    if (len === 0) return;
+    const visible = Math.min(len, 4);
+
+    stackOrder.forEach((projIdx, i) => {
+      const fromTop = len - 1 - i; // 0 = top card
+      if (fromTop >= visible) return;
+
+      const proj = filtered[projIdx];
+      const card = document.createElement('div');
+      card.className = 'stack-card' + (fromTop === 0 ? ' is-top' : '');
+
+      const img = document.createElement('img');
+      img.src = proj.img;
+      img.alt = proj.title;
+      img.draggable = false;
+      card.appendChild(img);
+
+      // Position: each card behind rotates +4deg and scales down slightly
+      const rotate = fromTop * 4;
+      const scale  = 1 + i * 0.06 - len * 0.06;
+      card.style.zIndex     = len - fromTop;
+      card.style.transform  = `rotateZ(${rotate}deg) scale(${Math.max(scale, 0.7)})`;
+
+      if (fromTop === 0) addDrag(card);
+      container.appendChild(card);
     });
   }
+
+  /* ── Drag interaction for top card ── */
+  function addDrag(card) {
+    let sx = 0, sy = 0, didDrag = false, active = false;
+
+    // Scales with card size so threshold feels consistent on mobile & desktop
+    function threshold() { return card.offsetWidth * 0.28; }
+
+    card.addEventListener('pointerdown', function (e) {
+      sx = e.clientX; sy = e.clientY; didDrag = false; active = true;
+      card.setPointerCapture(e.pointerId);
+      card.classList.add('dragging');
+    });
+
+    card.addEventListener('pointermove', function (e) {
+      if (!active || !(e.buttons & 1)) return;
+      const dx = e.clientX - sx;
+      const dy = e.clientY - sy;
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) didDrag = true;
+      card.style.transform = `translate(${dx}px,${dy}px) rotateZ(${dx * 0.07}deg)`;
+    });
+
+    function finish(e) {
+      if (!active) return;
+      active = false;
+      card.classList.remove('dragging');
+      const dx = e.clientX - sx;
+      const dy = e.clientY - sy;
+      const t  = threshold();
+
+      if (Math.abs(dx) > t || Math.abs(dy) > t) {
+        sendToBack();
+      } else {
+        card.style.transition = 'transform 0.38s cubic-bezier(0.34,1.4,0.64,1)';
+        card.style.transform  = 'rotateZ(0deg) scale(1)';
+        card.addEventListener('transitionend', function handler() {
+          card.removeEventListener('transitionend', handler);
+          renderStack();
+        });
+        if (!didDrag) sendToBack();
+      }
+    }
+
+    card.addEventListener('pointerup',     finish);
+    card.addEventListener('pointercancel', finish);
+  }
+
+  /* ── Render: info panel ── */
+  function renderInfo() {
+    const el = document.getElementById('stack-info');
+    if (!filtered.length) {
+      el.innerHTML = '<p style="color:var(--gray)">No projects in this category.</p>';
+      return;
+    }
+    const proj    = filtered[stackOrder[stackOrder.length - 1]];
+    const current = stackOrder.indexOf(stackOrder[stackOrder.length - 1]) + 1;
+
+    el.innerHTML = `
+      <span class="info-cat">${proj.catLabel}</span>
+      <h3 class="info-title">${proj.title}</h3>
+      <p class="info-desc">${proj.desc}</p>
+      <p class="info-counter">
+        <span>${current}</span> / ${filtered.length} projects
+      </p>
+      <div class="info-actions">
+        <a class="info-link" href="${proj.link}" target="_blank" rel="noopener">
+          ${proj.gh ? 'View on GitHub' : 'View Project'}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </a>
+        <button class="info-nav" aria-label="Next project" onclick="window._stackNext()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+    `;
+  }
+
+  /* ── Render: dot indicators ── */
+  function renderDots() {
+    const el  = document.getElementById('stack-dots');
+    const top = stackOrder[stackOrder.length - 1];
+    el.innerHTML = '';
+    filtered.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'sdot' + (i === top ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to project ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      el.appendChild(d);
+    });
+  }
+
+  function renderAll() {
+    renderStack();
+    renderInfo();
+    renderDots();
+  }
+
+  /* Expose next() for the arrow button */
+  window._stackNext = sendToBack;
+
+  /* ── Tab filter ── */
+  document.getElementById('portfolio-tabs').addEventListener('click', function (e) {
+    const btn = e.target.closest('.ptab');
+    if (!btn) return;
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    initStack(cat === 'all' ? ALL_PROJECTS : ALL_PROJECTS.filter(p => p.cat === cat));
+  });
+
+  /* ── Boot ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    initStack(ALL_PROJECTS);
+  });
+  // Also init immediately in case DOM is already ready
+  if (document.readyState !== 'loading') initStack(ALL_PROJECTS);
+
+})();
   
   // ── Certificates toggle + popup ───────────────────────────────
   function toggleCerts(btn) {
