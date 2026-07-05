@@ -137,6 +137,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // base state: invisible, shifted down — set inline so nothing else can override it
       span.style.setProperty("display", "inline-block", "important");
       span.style.setProperty("color", "#ff7a00", "important");
+      span.style.setProperty("-webkit-text-fill-color", "#ff7a00", "important");
+      span.style.setProperty("background", "none", "important");
       span.style.setProperty("transition", "transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease", "important");
       setCharStyle(span, 0, "100%");
       return span;
