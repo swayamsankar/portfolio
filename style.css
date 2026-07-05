@@ -298,74 +298,46 @@
   display: block;
   vertical-align: bottom;
   white-space: nowrap;
-
   font-size: clamp(22px, 3.6vw, 40px);
-  line-height: 1.25;
-
   max-width: 100%;
-
-  /* IMPORTANT FIX FOR NETLIFY */
-  overflow: visible !important;
-
-  color: #ff7a00 !important;
+  overflow: hidden;
+  min-height: 1.2em;    /* prevents the line from collapsing when innerHTML is cleared */
 }
-
 
 .text-rotate-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
-
   overflow: hidden;
-
   clip: rect(0,0,0,0);
-
   white-space: nowrap;
 }
-
 
 .text-rotate-visible {
   display: inline-flex;
   flex-wrap: nowrap;
   white-space: nowrap;
-
-  overflow: visible !important;
-
-  color: #ff7a00 !important;
+  min-height: 1.2em;   /* keeps space reserved even when empty for a moment */
 }
-
 
 .text-rotate-char {
   display: inline-block;
-
   white-space: pre;
-
-  opacity: 1 !important;
-  visibility: visible !important;
-
-  transform: translateY(0) !important;
-
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
   color: #ff7a00 !important;
-
-  transition:
-    transform 0.4s ease,
-    opacity 0.3s ease;
 }
 
-
-/* active characters */
 .text-rotate-char.enter {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-
-/* leaving characters */
 .text-rotate-char.exit {
-  opacity: 0 !important;
-
-  /* keep inside container */
-  transform: translateY(20px) !important;
+  opacity: 0;
+  transform: translateY(-120%);
+  transition: transform 0.35s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.25s ease;
 }
 
 /* ── Description & Actions ── */

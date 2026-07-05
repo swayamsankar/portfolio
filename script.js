@@ -119,109 +119,61 @@ document.addEventListener("DOMContentLoaded", function () {
   const rotationInterval = 2200;
   const staggerDuration = 25;
 
-
   function splitToChars(text) {
     return Array.from(text);
   }
 
-
   function buildCharSpans(text) {
-
     return splitToChars(text).map((ch) => {
-
       const span = document.createElement("span");
-
       span.className = "text-rotate-char";
-
       span.textContent = ch === " " ? "\u00A0" : ch;
-
       return span;
-
     });
-
   }
 
-
   function renderRole(text) {
-
     const chars = buildCharSpans(text);
-
     visibleEl.innerHTML = "";
-
     chars.forEach((char) => {
       visibleEl.appendChild(char);
     });
-
-
     srEl.textContent = text;
-
-
     requestAnimationFrame(() => {
-
       chars.forEach((char, i) => {
-
         setTimeout(() => {
-
           char.classList.add("enter");
-
         }, i * staggerDuration);
-
       });
-
     });
-
   }
-
-
 
   function rotateToNext() {
-
     const currentChars = Array.from(visibleEl.children);
-
-
     currentChars.forEach((char, i) => {
-
-      const delay =
-        (currentChars.length - 1 - i) * staggerDuration;
-
-
+      const delay = (currentChars.length - 1 - i) * staggerDuration;
       setTimeout(() => {
-
         char.classList.remove("enter");
-
         char.classList.add("exit");
-
       }, delay);
-
     });
-
-
-    const exitTotalTime =
-      currentChars.length * staggerDuration + 350;
-
-
+    const exitTotalTime = currentChars.length * staggerDuration + 350;
     setTimeout(() => {
-
       index = (index + 1) % roles.length;
-
       renderRole(roles[index]);
-
     }, exitTotalTime);
-
   }
 
-
-
-  // first load
-  renderRole(roles[index]);
-
-
-  // continue animation
-  setInterval(
-    rotateToNext,
-    rotationInterval
-  );
-
+  // Use FontFaceSet.ready if available, to wait for fonts before animating
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      renderRole(roles[index]);
+      setInterval(rotateToNext, rotationInterval);
+    });
+  } else {
+    renderRole(roles[index]);
+    setInterval(rotateToNext, rotationInterval);
+  }
 
 });
 
