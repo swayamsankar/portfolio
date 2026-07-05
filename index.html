@@ -42,18 +42,27 @@
       <p class="hero-eyebrow">Full Stack Developer &amp; Designer</p>
       <h1 class="hero-title">
         <span class="blur-text" id="blurHero">I'm <em>Swayam,</em></span><br>
-        <span class="shiny-text-el">Web Developer</span>
+        <span class="shiny-text-el text-rotate" id="heroRotate" aria-live="polite">
+          <span class="text-rotate-sr-only" id="heroRotateSR">Full Stack Developer</span>
+          <span class="text-rotate-visible" id="heroRotateVisible" aria-hidden="true"></span>
+        </span>
       </h1>
-      <p class="hero-desc">Crafting pixel-perfect, full-stack experiences from Odisha, India — blending code, design, and creativity.</p>
-      <div class="hero-actions">
-        <a href="#portfolio" class="btn-primary">View Projects</a>
-        <a href="#contact" class="btn-outline">Hire Me</a>
+      <p class="hero-desc">From Odisha, India, I craft digital experiences that go beyond function, making users feel something.</p>
+      <div class="hero-actions focus-container" id="heroFocus">
+        <a href="#portfolio" class="focus-word active" data-idx="0">View Projects</a>
+        <a href="#contact" class="focus-word" data-idx="1">Hire Me</a>
+        <div class="focus-frame" id="heroFocusFrame">
+          <span class="corner top-left"></span>
+          <span class="corner top-right"></span>
+          <span class="corner bottom-left"></span>
+          <span class="corner bottom-right"></span>
+        </div>
       </div>
       <div class="hero-stats">
-        <div class="hstat"><span class="hstat-num">12+</span><span class="hstat-label">Projects</span></div>
+        <div class="hstat"><span class="hstat-num">15+</span><span class="hstat-label">Projects</span></div>
         <div class="hstat-div"></div>
         <div class="hstat">
-          <span class="hstat-num">5+</span>
+          <span class="hstat-num">10+</span>
           <span class="hstat-label">Frameworks<br>Mastered</span>
         </div>
         <div class="hstat-div"></div>
@@ -80,6 +89,7 @@
 </section>
 
 <!-- ========== MY SERVICES ========== -->
+
 <section class="services-section" id="services">
   <div class="section-inner">
     <div class="section-head" data-reveal>
@@ -87,30 +97,39 @@
       <h2 class="section-title">My <em>Services</em></h2>
       <p class="section-sub">End-to-end digital solutions — from idea to deployment, beautifully crafted.</p>
     </div>
-    <div class="services-grid">
-      <div class="srv-card" data-reveal>
-        <div class="srv-icon"><i class="fa-solid fa-code"></i></div>
-        <h3>Web Development</h3>
-        <p>Full-stack web apps using React, Node.js, Express, MySQL, and MongoDB. Clean code, fast load, great UX.</p>
-        <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-      <div class="srv-card" data-reveal>
-        <div class="srv-icon"><i class="fa-solid fa-pen-ruler"></i></div>
-        <h3>UI/UX Design</h3>
-        <p>Intuitive, modern interfaces designed in Figma, Canva, and Adobe Express. User-centered. Visually stunning.</p>
-        <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-      <div class="srv-card featured-srv" data-reveal>
-        <div class="srv-icon"><i class="fa-solid fa-robot"></i></div>
-        <h3>AI / ML Solutions</h3>
-        <p>Building intelligent applications using TensorFlow, PyTorch and Keras for real-world problems, and also development using this in multiple web projects.</p>
-        <a href="#portfolio" class="srv-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-      <div class="srv-card" data-reveal>
-        <div class="srv-icon"><i class="fa-solid fa-camera"></i></div>
-        <h3>Media &amp; Visual Production</h3>
-        <p>Professional event photography, videography, video editing, and organized documentary creation.</p>
-        <a href="https://eventphotographybooksite.netlify.app/" target="_blank" class="srv-link">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+
+    <div class="scroll-stack-scroller" id="servicesStack">
+      <div class="scroll-stack-inner">
+
+        <div class="scroll-stack-card srv-stack-card tone-1">
+          <div class="srv-icon"><i class="fa-solid fa-code"></i></div>
+          <h3>Web Development</h3>
+          <p>Full-stack web apps using React, Node.js, Express, MySQL, and MongoDB. Clean code, fast load, great UX.</p>
+          <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="scroll-stack-card srv-stack-card tone-2">
+          <div class="srv-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+          <h3>UI/UX Design</h3>
+          <p>Intuitive, modern interfaces designed in Figma, Canva, and Adobe Express. User-centered. Visually stunning.</p>
+          <a href="#portfolio" class="srv-link">See Projects <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="scroll-stack-card srv-stack-card tone-3 featured-srv">
+          <div class="srv-icon"><i class="fa-solid fa-robot"></i></div>
+          <h3>AI / ML Solutions</h3>
+          <p>Building intelligent applications using TensorFlow, PyTorch and Keras for real-world problems, and also development using this in multiple web projects.</p>
+          <a href="#portfolio" class="srv-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="scroll-stack-card srv-stack-card tone-4">
+          <div class="srv-icon"><i class="fa-solid fa-camera"></i></div>
+          <h3>Media &amp; Visual Production</h3>
+          <p>Professional event photography, videography, video editing, and organized documentary creation.</p>
+          <a href="https://eventphotographybooksite.netlify.app/" target="_blank" class="srv-link">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="scroll-stack-end"></div>
       </div>
     </div>
   </div>
@@ -226,11 +245,11 @@
       <p class="why-desc">I combine technical depth with creative vision — delivering projects that look great, perform fast, and solve real problems.</p>
       <div class="why-stats-row">
         <div class="why-stat">
-          <strong class="counter" data-target="12">0</strong><span>+</span>
+          <strong class="counter" data-target="15">0</strong><span>+</span>
           <p>Projects<br>Completed</p>
         </div>
         <div class="why-stat">
-          <strong class="counter" data-target="5">0</strong><span>+</span>
+          <strong class="counter" data-target="10">0</strong><span>+</span>
           <p>Frameworks<br>Mastered</p>
         </div>
         <div class="why-stat">
@@ -467,8 +486,11 @@
       <h5>Projects</h5>
       <a href="https://github.com/swayamsankar/Expense_Intelligence_Ai" target="_blank">Expenses Intelligence AI</a>
       <a href="https://github.com/swayamsankar/swayams-digital-mart" target="_blank">Techsway</a>
-      <a href="https://restaurant-website-k7jb.onrender.com" target="_blank">Gastronome</a>
+      <a href="https://github.com/swayamsankar/restaurant-website/tree/main" target="_blank">Gastronome</a>
       <a href="https://github.com/swayamsankar/Factify" target="_blank">Factify</a>
+      <a href="https://github.com/swayamsankar/ProductPulse-Product-Analytics-Experimentation-Platform" target="_blank">ProductPulse</a>
+      <a href="https://github.com/swayamsankar/quizkit_Web" target="_blank">QuizKit</a>
+      <a href="https://github.com/swayamsankar/Daily_Task_Tracker" target="_blank">TaskSway</a>
     </div>
     <div class="footer-links">
       <h5>Follow Me</h5>
@@ -482,6 +504,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

@@ -7,16 +7,12 @@
   const container = document.getElementById('blurHero');
   if (!container) return;
 
-  // Wrap each word, preserve <em> as one "word"
-  // Copy childNodes to array because we'll be modifying DOM
   Array.from(container.childNodes).forEach(node => {
     if (node.nodeType === Node.TEXT_NODE) {
-      // Text node: wrap each word in a span.blur-word
       const words = node.textContent.split(/(\s+)/);
       const frag = document.createDocumentFragment();
       words.forEach(w => {
         if (!w.trim()) {
-          // Preserve whitespace (renders spaces)
           frag.appendChild(document.createTextNode(w));
           return;
         }
@@ -27,7 +23,6 @@
       });
       container.replaceChild(frag, node);
     } else if (node.nodeType === Node.ELEMENT_NODE) {
-      // wrap the entire <em> as one blur-word
       const wrap = document.createElement('span');
       wrap.className = 'blur-word';
       node.parentNode.insertBefore(wrap, node);
@@ -36,7 +31,7 @@
   });
 
   const words = container.querySelectorAll('.blur-word');
-  const delay = 150; // ms between each word, matches BlurText
+  const delay = 150;
 
   const observer = new IntersectionObserver(([entry]) => {
     if (!entry.isIntersecting) return;
@@ -49,97 +44,186 @@
   observer.observe(container);
 })();
 
-// ── Typed effect for roles in Hero section ─────────────────────
+// ── TrueFocus effect for Hero action buttons (View Projects / Hire Me) ────
 (function () {
-  const roles = [
-    "Full Stack Developer",
-    "Creative Coder",
-    "UI / UX Designer",
-    "React Specialist",
-    "3D Web Enthusiast"
-  ];
-  let ri = 0, ci = 0, del = false;
+  const container = document.getElementById('heroFocus');
+  const frame = document.getElementById('heroFocusFrame');
+  if (!container || !frame) return;
+  const words = Array.from(container.querySelectorAll('.focus-word'));
+  if (!words.length) return;
+  let currentIndex = 0;
+  const animationDuration = 0.5;
+  const pauseBetween = 2.2;
+  let autoTimer = null;
+  let isManualHover = false;
 
-  const el = document.getElementById('typed');
-  if (!el) return;
-
-  function type() {
-    const word = roles[ri];
-    if (!del) {
-      el.textContent = word.slice(0, ++ci);
-      if (ci === word.length) { del = true; setTimeout(type, 1800); return; }
-      setTimeout(type, 90);
-    } else {
-      el.textContent = word.slice(0, --ci);
-      if (ci === 0) { del = false; ri = (ri + 1) % roles.length; setTimeout(type, 400); return; }
-      setTimeout(type, 45);
-    }
+  function moveFrameTo(index) {
+    const word = words[index];
+    if (!word) return;
+    const parentRect = container.getBoundingClientRect();
+    const wordRect = word.getBoundingClientRect();
+    frame.style.transform = `translate(${wordRect.left - parentRect.left}px, ${wordRect.top - parentRect.top}px)`;
+    frame.style.width = `${wordRect.width}px`;
+    frame.style.height = `${wordRect.height}px`;
+    frame.classList.add('show');
+    words.forEach((w, i) => w.classList.toggle('active', i === index));
   }
-  type();
+
+  function startAutoCycle() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+      if (isManualHover) return;
+      currentIndex = (currentIndex + 1) % words.length;
+      moveFrameTo(currentIndex);
+    }, (animationDuration + pauseBetween) * 1000);
+  }
+
+  words.forEach((word, index) => {
+    word.addEventListener('mouseenter', () => {
+      isManualHover = true;
+      currentIndex = index;
+      moveFrameTo(index);
+    });
+    word.addEventListener('mouseleave', () => {
+      isManualHover = false;
+    });
+  });
+
+  requestAnimationFrame(() => moveFrameTo(currentIndex));
+  window.addEventListener('resize', () => moveFrameTo(currentIndex));
+  startAutoCycle();
+})();
+
+// ── RotatingText: cycles hero role titles (port of RotatingText component) ──
+(function () {
+
+  const roles = [
+   "Full Stack Developer",
+   "Software Developer",
+   "QA Engineer",
+   "Product Developer",
+   "AI & Cloud Enthusiast",
+   "Creative Technologist"
+  ];
+
+  const srEl = document.getElementById('heroRotateSR');
+  const visibleEl = document.getElementById('heroRotateVisible');
+  if (!srEl || !visibleEl) return;
+
+  let index = 0;
+  const rotationInterval = 2200;   // ms each role stays visible
+  const staggerDuration = 25;      // ms delay between each character
+
+  function splitToChars(text) {
+    return Array.from(text);
+  }
+
+  function buildCharSpans(text) {
+    return splitToChars(text).map(ch => {
+      const span = document.createElement('span');
+      span.className = 'text-rotate-char';
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      return span;
+    });
+  }
+
+  function renderRole(text) {
+    const chars = buildCharSpans(text);
+    visibleEl.innerHTML = '';
+    chars.forEach(c => visibleEl.appendChild(c));
+    srEl.textContent = text;
+
+    requestAnimationFrame(() => {
+      chars.forEach((c, i) => {
+        setTimeout(() => c.classList.add('enter'), i * staggerDuration);
+      });
+    });
+  }
+
+  function rotateToNext() {
+    const currentChars = Array.from(visibleEl.children);
+
+    currentChars.forEach((c, i) => {
+      const delay = (currentChars.length - 1 - i) * staggerDuration;
+      setTimeout(() => {
+        c.classList.remove('enter');
+        c.classList.add('exit');
+      }, delay);
+    });
+
+    const exitTotalTime = currentChars.length * staggerDuration + 350;
+    setTimeout(() => {
+      index = (index + 1) % roles.length;
+      renderRole(roles[index]);
+    }, exitTotalTime);
+  }
+
+  renderRole(roles[index]);
+  setInterval(rotateToNext, rotationInterval);
 })();
 
 // ── Navbar scroll effect ──────────────────────────────────────
 window.addEventListener('scroll', () => {
-    const nb = document.getElementById('navbar');
-    if (nb) nb.classList.toggle('scrolled', window.scrollY > 60);
-  });
-  
-  // ── Mobile menu ──────────────────────────────────────────────
-  function openNav() {
-    document.getElementById('nav-links')?.classList.add('open');
-  }
-  function closeNav() {
-    document.getElementById('nav-links')?.classList.remove('open');
-  }
-  document.querySelectorAll('#nav-links a').forEach(a => {
-    a.addEventListener('click', closeNav);
-  });
-  
-  // ── Scroll Reveal (IntersectionObserver) ─────────────────────
-  function initReveal() {
-    const els = document.querySelectorAll('[data-reveal], [data-reveal-delay]');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    els.forEach(el => io.observe(el));
-  }
-  
-  // ── Counter animation ─────────────────────────────────────────
-  function animateCounters() {
-    document.querySelectorAll('.counter[data-target]').forEach(el => {
-      const target = parseInt(el.getAttribute('data-target'));
-      const duration = 1800;
-      const step = target / (duration / 16);
-      let cur = 0;
-      const t = setInterval(() => {
-        cur = Math.min(cur + step, target);
-        el.textContent = Math.floor(cur);
-        if (cur >= target) clearInterval(t);
-      }, 16);
-    });
-  }
-  
-  function initCounters() {
-    const section = document.querySelector('.why-stats-row');
-    if (!section) return;
-    let fired = false;
-    const io = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !fired) {
-        fired = true;
-        animateCounters();
-        io.disconnect();
+  const nb = document.getElementById('navbar');
+  if (nb) nb.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Mobile menu ──────────────────────────────────────────────
+function openNav() {
+  document.getElementById('nav-links')?.classList.add('open');
+}
+function closeNav() {
+  document.getElementById('nav-links')?.classList.remove('open');
+}
+document.querySelectorAll('#nav-links a').forEach(a => {
+  a.addEventListener('click', closeNav);
+});
+
+// ── Scroll Reveal (IntersectionObserver) ─────────────────────
+function initReveal() {
+  const els = document.querySelectorAll('[data-reveal], [data-reveal-delay]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
       }
-    }, { threshold: 0.4 });
-    io.observe(section);
-  }
-  
-  // ── Portfolio filter ──────────────────────────────────────────
-  // Modern project stack carousel + tab filter replacement
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
+}
+
+// ── Counter animation ─────────────────────────────────────────
+function animateCounters() {
+  document.querySelectorAll('.counter[data-target]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'));
+    const duration = 1800;
+    const step = target / (duration / 16);
+    let cur = 0;
+    const t = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = Math.floor(cur);
+      if (cur >= target) clearInterval(t);
+    }, 16);
+  });
+}
+
+function initCounters() {
+  const section = document.querySelector('.why-stats-row');
+  if (!section) return;
+  let fired = false;
+  const io = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !fired) {
+      fired = true;
+      animateCounters();
+      io.disconnect();
+    }
+  }, { threshold: 0.4 });
+  io.observe(section);
+}
+
+// ── Portfolio filter ──────────────────────────────────────────
+// Modern project stack carousel + tab filter replacement
 (function () {
 
   /* ── Project data ── */
@@ -158,11 +242,9 @@ window.addEventListener('scroll', () => {
     { cat:'group',  img:'images/group-work-3.png',catLabel:'Group',        title:'Traffic Management',        desc:'Urban traffic monitoring & optimization',             link:'https://github.com/swayamsankar/Traffic_Management_System',            gh:true  },
   ];
 
-  /* ── State ── */
   let filtered = [];
-  let stackOrder = []; // indices into `filtered`; last element = top card
+  let stackOrder = [];
 
-  /* ── Core stack logic ── */
   function sendToBack() {
     if (stackOrder.length < 2) return;
     const top = stackOrder.pop();
@@ -185,7 +267,6 @@ window.addEventListener('scroll', () => {
     renderAll();
   }
 
-  /* ── Render: card stack ── */
   function renderStack() {
     const container = document.getElementById('stack-container');
     container.innerHTML = '';
@@ -194,7 +275,7 @@ window.addEventListener('scroll', () => {
     const visible = Math.min(len, 4);
 
     stackOrder.forEach((projIdx, i) => {
-      const fromTop = len - 1 - i; // 0 = top card
+      const fromTop = len - 1 - i;
       if (fromTop >= visible) return;
 
       const proj = filtered[projIdx];
@@ -207,7 +288,6 @@ window.addEventListener('scroll', () => {
       img.draggable = false;
       card.appendChild(img);
 
-      // Position: each card behind rotates +4deg and scales down slightly
       const rotate = fromTop * 4;
       const scale  = 1 + i * 0.06 - len * 0.06;
       card.style.zIndex     = len - fromTop;
@@ -218,11 +298,8 @@ window.addEventListener('scroll', () => {
     });
   }
 
-  /* ── Drag interaction for top card ── */
   function addDrag(card) {
     let sx = 0, sy = 0, didDrag = false, active = false;
-
-    // Scales with card size so threshold feels consistent on mobile & desktop
     function threshold() { return card.offsetWidth * 0.28; }
 
     card.addEventListener('pointerdown', function (e) {
@@ -264,7 +341,6 @@ window.addEventListener('scroll', () => {
     card.addEventListener('pointercancel', finish);
   }
 
-  /* ── Render: info panel ── */
   function renderInfo() {
     const el = document.getElementById('stack-info');
     if (!filtered.length) {
@@ -297,7 +373,6 @@ window.addEventListener('scroll', () => {
     `;
   }
 
-  /* ── Render: dot indicators ── */
   function renderDots() {
     const el  = document.getElementById('stack-dots');
     const top = stackOrder[stackOrder.length - 1];
@@ -317,10 +392,8 @@ window.addEventListener('scroll', () => {
     renderDots();
   }
 
-  /* Expose next() for the arrow button */
   window._stackNext = sendToBack;
 
-  /* ── Tab filter ── */
   document.getElementById('portfolio-tabs').addEventListener('click', function (e) {
     const btn = e.target.closest('.ptab');
     if (!btn) return;
@@ -330,127 +403,347 @@ window.addEventListener('scroll', () => {
     initStack(cat === 'all' ? ALL_PROJECTS : ALL_PROJECTS.filter(p => p.cat === cat));
   });
 
-  /* ── Boot ── */
   document.addEventListener('DOMContentLoaded', function () {
     initStack(ALL_PROJECTS);
   });
-  // Also init immediately in case DOM is already ready
   if (document.readyState !== 'loading') initStack(ALL_PROJECTS);
 
 })();
-  
-  // ── Certificates toggle + popup ───────────────────────────────
-  function toggleCerts(btn) {
-    const hidden = document.querySelectorAll('.hidden-cert');
-    const showing = hidden[0] && hidden[0].style.display !== 'none';
-  
-    if (showing) {
-      hidden.forEach(c => { c.style.display = 'none'; });
-      btn.textContent = 'See More Certificates';
+
+// ── Service Section: Smooth Scroll Stack Effect ────────────────
+// ── Service Section: ScrollStack (exact port of React ScrollStack component) ────────────────
+(function () {
+  const config = {
+    itemDistance: 100,
+    itemScale: 0.03,
+    itemStackDistance: 30,
+    stackPosition: '20%',
+    scaleEndPosition: '10%',
+    baseScale: 0.85,
+    rotationAmount: 0,
+    blurAmount: 0,
+    useWindowScroll: true
+  };
+
+  let cards = [];
+  let cardOffsets = [];
+  let endElementTop = 0;
+  let stackCompleted = false;
+  let rafId = null;
+  let isUpdating = false;
+  const lastTransforms = new Map();
+
+  function parsePercentage(value, containerHeight) {
+    if (typeof value === 'string' && value.includes('%')) {
+      return (parseFloat(value) / 100) * containerHeight;
+    }
+    return parseFloat(value);
+  }
+
+  function getScrollData(scroller) {
+    if (config.useWindowScroll) {
+      return {
+        scrollTop: window.scrollY,
+        containerHeight: window.innerHeight
+      };
     } else {
-      hidden.forEach((c, i) => {
-        c.style.display = 'block';
-        setTimeout(() => { c.classList.add('visible'); }, i * 60);
-      });
-      btn.textContent = 'Show Less';
+      return {
+        scrollTop: scroller.scrollTop,
+        containerHeight: scroller.clientHeight
+      };
     }
   }
-  
-  function openCertPopup(src) {
-    const popup = document.getElementById('cert-popup');
-    document.getElementById('cert-popup-img').src = src;
-    popup.classList.add('active');
-    document.body.style.overflow = 'hidden';
+
+  function getElementOffset(element) {
+    if (config.useWindowScroll) {
+      const rect = element.getBoundingClientRect();
+      return rect.top + window.scrollY;
+    } else {
+      return element.offsetTop;
+    }
   }
-  function closeCertPopup() {
-    document.getElementById('cert-popup')?.classList.remove('active');
-    document.body.style.overflow = '';
+
+  function calculateProgress(scrollTop, start, end) {
+    if (scrollTop < start) return 0;
+    if (scrollTop > end) return 1;
+    return (scrollTop - start) / (end - start);
   }
-  
-  function initCertClicks() {
-    document.querySelectorAll('.cert-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const img = card.querySelector('img');
-        if (img) openCertPopup(img.src);
-      });
+
+  function recalcOffsets(scroller) {
+    cards.forEach((card, i) => {
+      cardOffsets[i] = getElementOffset(card);
     });
-    document.getElementById('cert-popup')?.addEventListener('click', e => {
-      if (e.target === document.getElementById('cert-popup')) closeCertPopup();
-    });
+    const endElement = config.useWindowScroll
+      ? document.querySelector('.scroll-stack-end')
+      : scroller.querySelector('.scroll-stack-end');
+    endElementTop = endElement ? getElementOffset(endElement) : 0;
   }
-  
-  // ── Gallery Carousel ──────────────────────────────────────────
-  let slideIndex = 0;
-  let slideTimer;
-  
-  function showSlide(n) {
-    const slides = document.querySelectorAll('.c-slide');
-    if (!slides.length) return;
-    slideIndex = ((n % slides.length) + slides.length) % slides.length;
-    slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
-  }
-  function nextSlide() { showSlide(slideIndex + 1); }
-  function prevSlide() { showSlide(slideIndex - 1); }
-  
-  function initCarousel() {
-    const carousel = document.getElementById('carousel');
-    if (!carousel) return;
-    slideTimer = setInterval(nextSlide, 3500);
-    carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
-    carousel.addEventListener('mouseleave', () => { slideTimer = setInterval(nextSlide, 3500); });
-    showSlide(0);
-  }
-  
-  // ── Contact form ──────────────────────────────────────────────
-  function initContactForm() {
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzyMW1ZywB1UJke1jGcKQ9iLXHi1hZM335d9By1lpPcOsy0KO0wEXwxoRSPv8yFn8QHZA/exec";
-    const form = document.querySelector('form[name="submit-to-google-sheet"]');
-    const msg = document.getElementById("msg");
-    if (!form || !msg) return;
-  
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      msg.textContent = "Sending...";
-      msg.style.color = "var(--gray)";
-  
-      const required = form.querySelectorAll('[required]');
-      let valid = true;
-      required.forEach(f => {
-        if (!f.value.trim()) { f.style.borderColor = '#ef4444'; valid = false; }
-        else { f.style.borderColor = ''; }
-      });
-      if (!valid) {
-        msg.textContent = "Please fill in all required fields.";
-        msg.style.color = "#ef4444";
-        return;
+
+  function updateCardTransforms(scroller) {
+    if (!cards.length || isUpdating) return;
+    isUpdating = true;
+
+    const { scrollTop, containerHeight } = getScrollData(scroller);
+    const stackPositionPx = parsePercentage(config.stackPosition, containerHeight);
+    const scaleEndPositionPx = parsePercentage(config.scaleEndPosition, containerHeight);
+
+    cards.forEach((card, i) => {
+      const cardTop = cardOffsets[i];
+      const triggerStart = cardTop - stackPositionPx - config.itemStackDistance * i;
+      const triggerEnd = cardTop - scaleEndPositionPx;
+      const pinStart = cardTop - stackPositionPx - config.itemStackDistance * i;
+      const pinEnd = endElementTop - containerHeight / 2;
+
+      const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
+      const targetScale = config.baseScale + i * config.itemScale;
+      const scale = 1 - scaleProgress * (1 - targetScale);
+      const rotation = config.rotationAmount ? i * config.rotationAmount * scaleProgress : 0;
+
+      let blur = 0;
+      if (config.blurAmount) {
+        let topCardIndex = 0;
+        for (let j = 0; j < cards.length; j++) {
+          const jCardTop = cardOffsets[j];
+          const jTriggerStart = jCardTop - stackPositionPx - config.itemStackDistance * j;
+          if (scrollTop >= jTriggerStart) topCardIndex = j;
+        }
+        if (i < topCardIndex) {
+          const depthInStack = topCardIndex - i;
+          blur = Math.max(0, depthInStack * config.blurAmount);
+        }
       }
-  
-      try {
-        await fetch(scriptURL, {
-          method: "POST",
-          body: new FormData(form),
-          mode: "no-cors"
-        });
-        msg.textContent = "Message sent successfully! 🎉";
-        msg.style.color = "#22c55e";
-        form.reset();
-      } catch(err) {
-        msg.textContent = "Error sending. Please try again.";
-        msg.style.color = "#ef4444";
+
+      let translateY = 0;
+      const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
+
+      if (isPinned) {
+        translateY = scrollTop - cardTop + stackPositionPx + config.itemStackDistance * i;
+      } else if (scrollTop > pinEnd) {
+        translateY = pinEnd - cardTop + stackPositionPx + config.itemStackDistance * i;
+      }
+
+      const t = {
+        translateY: Math.round(translateY * 100) / 100,
+        scale: Math.round(scale * 1000) / 1000,
+        rotation: Math.round(rotation * 100) / 100,
+        blur: Math.round(blur * 100) / 100
+      };
+
+      const last = lastTransforms.get(i);
+      const changed =
+        !last ||
+        Math.abs(last.translateY - t.translateY) > 0.1 ||
+        Math.abs(last.scale - t.scale) > 0.001 ||
+        Math.abs(last.rotation - t.rotation) > 0.1 ||
+        Math.abs(last.blur - t.blur) > 0.1;
+
+      if (changed) {
+        card.style.transform = `translate3d(0, ${t.translateY}px, 0) scale(${t.scale}) rotate(${t.rotation}deg)`;
+        card.style.filter = t.blur > 0 ? `blur(${t.blur}px)` : '';
+        lastTransforms.set(i, t);
+      }
+
+      if (i === cards.length - 1) {
+        const inView = scrollTop >= pinStart && scrollTop <= pinEnd;
+        if (inView && !stackCompleted) stackCompleted = true;
+        else if (!inView && stackCompleted) stackCompleted = false;
       }
     });
+
+    isUpdating = false;
   }
-  
-  // ── Keyboard close for popup ──────────────────────────────────
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeCertPopup();
+
+  function initScrollStack() {
+    const scroller = document.getElementById('servicesStack');
+    if (!scroller) return;
+
+    cards = Array.from(
+      config.useWindowScroll
+        ? document.querySelectorAll('.scroll-stack-card')
+        : scroller.querySelectorAll('.scroll-stack-card')
+    );
+
+    cards.forEach((card, i) => {
+      if (i < cards.length - 1) {
+        card.style.marginBottom = `${config.itemDistance}px`;
+      }
+      card.style.willChange = 'transform, filter';
+      card.style.transformOrigin = 'top center';
+      card.style.backfaceVisibility = 'hidden';
+      card.style.transform = 'translateZ(0)';
+      card.style.perspective = '1000px';
+    });
+
+    const handleScroll = () => updateCardTransforms(scroller);
+
+    let lenis;
+    if (config.useWindowScroll) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 2,
+        infinite: false,
+        wheelMultiplier: 1,
+        lerp: 0.1,
+        syncTouch: true,
+        syncTouchLerp: 0.075
+      });
+    } else {
+      lenis = new Lenis({
+        wrapper: scroller,
+        content: scroller.querySelector('.scroll-stack-inner'),
+        duration: 1.2,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 2,
+        infinite: false,
+        gestureOrientationHandler: true,
+        normalizeWheel: true,
+        wheelMultiplier: 1,
+        touchInertiaMultiplier: 35,
+        lerp: 0.1,
+        syncTouch: true,
+        syncTouchLerp: 0.075,
+        touchInertia: 0.6
+      });
+    }
+
+    lenis.on('scroll', handleScroll);
+
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    requestAnimationFrame(() => {
+      recalcOffsets(scroller);
+      updateCardTransforms(scroller);
+    });
+
+    window.addEventListener('resize', () => {
+      recalcOffsets(scroller);
+      updateCardTransforms(scroller);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollStack);
+
+})();
+
+// ── Certificates toggle + popup ───────────────────────────────
+function toggleCerts(btn) {
+  const hidden = document.querySelectorAll('.hidden-cert');
+  const showing = hidden[0] && hidden[0].style.display !== 'none';
+
+  if (showing) {
+    hidden.forEach(c => { c.style.display = 'none'; });
+    btn.textContent = 'See More Certificates';
+  } else {
+    hidden.forEach((c, i) => {
+      c.style.display = 'block';
+      setTimeout(() => { c.classList.add('visible'); }, i * 60);
+    });
+    btn.textContent = 'Show Less';
+  }
+}
+
+function openCertPopup(src) {
+  const popup = document.getElementById('cert-popup');
+  document.getElementById('cert-popup-img').src = src;
+  popup.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeCertPopup() {
+  document.getElementById('cert-popup')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function initCertClicks() {
+  document.querySelectorAll('.cert-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img');
+      if (img) openCertPopup(img.src);
+    });
   });
-  
-  // ── Init all ─────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    initReveal();
-    initCounters();
-    initCarousel();
-    initCertClicks();
-    initContactForm();
+  document.getElementById('cert-popup')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('cert-popup')) closeCertPopup();
   });
+}
+
+// ── Gallery Carousel ──────────────────────────────────────────
+let slideIndex = 0;
+let slideTimer;
+
+function showSlide(n) {
+  const slides = document.querySelectorAll('.c-slide');
+  if (!slides.length) return;
+  slideIndex = ((n % slides.length) + slides.length) % slides.length;
+  slides.forEach((s, i) => s.classList.toggle('active', i === slideIndex));
+}
+function nextSlide() { showSlide(slideIndex + 1); }
+function prevSlide() { showSlide(slideIndex - 1); }
+
+function initCarousel() {
+  const carousel = document.getElementById('carousel');
+  if (!carousel) return;
+  slideTimer = setInterval(nextSlide, 3500);
+  carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+  carousel.addEventListener('mouseleave', () => { slideTimer = setInterval(nextSlide, 3500); });
+  showSlide(0);
+}
+
+// ── Contact form ──────────────────────────────────────────────
+function initContactForm() {
+  const scriptURL = "https://script.google.com/macros/s/AKfycbzyMW1ZywB1UJke1jGcKQ9iLXHi1hZM335d9By1lpPcOsy0KO0wEXwxoRSPv8yFn8QHZA/exec";
+  const form = document.querySelector('form[name="submit-to-google-sheet"]');
+  const msg = document.getElementById("msg");
+  if (!form || !msg) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.textContent = "Sending...";
+    msg.style.color = "var(--gray)";
+
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(f => {
+      if (!f.value.trim()) { f.style.borderColor = '#ef4444'; valid = false; }
+      else { f.style.borderColor = ''; }
+    });
+    if (!valid) {
+      msg.textContent = "Please fill in all required fields.";
+      msg.style.color = "#ef4444";
+      return;
+    }
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: new FormData(form),
+        mode: "no-cors"
+      });
+      msg.textContent = "Message sent successfully! 🎉";
+      msg.style.color = "#22c55e";
+      form.reset();
+    } catch(err) {
+      msg.textContent = "Error sending. Please try again.";
+      msg.style.color = "#ef4444";
+    }
+  });
+}
+
+// ── Keyboard close for popup ──────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeCertPopup();
+});
+
+// ── Init all ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initReveal();
+  initCounters();
+  initCarousel();
+  initCertClicks();
+  initContactForm();
+});
