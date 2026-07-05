@@ -95,72 +95,135 @@
 })();
 
 // ── RotatingText: cycles hero role titles (port of RotatingText component) ──
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
   const roles = [
-   "Full Stack Developer",
-   "Software Developer",
-   "QA Engineer",
-   "Product Developer",
-   "AI & Cloud Enthusiast",
-   "Creative Technologist"
+    "Full Stack Developer",
+    "Software Developer",
+    "QA Engineer",
+    "Product Developer",
+    "AI & Cloud Enthusiast",
+    "Creative Technologist"
   ];
 
-  const srEl = document.getElementById('heroRotateSR');
-  const visibleEl = document.getElementById('heroRotateVisible');
-  if (!srEl || !visibleEl) return;
+  const srEl = document.getElementById("heroRotateSR");
+  const visibleEl = document.getElementById("heroRotateVisible");
+
+  if (!srEl || !visibleEl) {
+    console.log("Hero rotate element not found");
+    return;
+  }
 
   let index = 0;
-  const rotationInterval = 2200;   // ms each role stays visible
-  const staggerDuration = 25;      // ms delay between each character
+
+  const rotationInterval = 2200;
+  const staggerDuration = 25;
+
 
   function splitToChars(text) {
     return Array.from(text);
   }
 
+
   function buildCharSpans(text) {
-    return splitToChars(text).map(ch => {
-      const span = document.createElement('span');
-      span.className = 'text-rotate-char';
-      span.textContent = ch === ' ' ? '\u00A0' : ch;
+
+    return splitToChars(text).map((ch) => {
+
+      const span = document.createElement("span");
+
+      span.className = "text-rotate-char";
+
+      span.textContent = ch === " " ? "\u00A0" : ch;
+
       return span;
+
     });
+
   }
+
 
   function renderRole(text) {
+
     const chars = buildCharSpans(text);
-    visibleEl.innerHTML = '';
-    chars.forEach(c => visibleEl.appendChild(c));
+
+    visibleEl.innerHTML = "";
+
+    chars.forEach((char) => {
+      visibleEl.appendChild(char);
+    });
+
+
     srEl.textContent = text;
 
+
     requestAnimationFrame(() => {
-      chars.forEach((c, i) => {
-        setTimeout(() => c.classList.add('enter'), i * staggerDuration);
+
+      chars.forEach((char, i) => {
+
+        setTimeout(() => {
+
+          char.classList.add("enter");
+
+        }, i * staggerDuration);
+
       });
+
     });
+
   }
+
+
 
   function rotateToNext() {
+
     const currentChars = Array.from(visibleEl.children);
 
-    currentChars.forEach((c, i) => {
-      const delay = (currentChars.length - 1 - i) * staggerDuration;
+
+    currentChars.forEach((char, i) => {
+
+      const delay =
+        (currentChars.length - 1 - i) * staggerDuration;
+
+
       setTimeout(() => {
-        c.classList.remove('enter');
-        c.classList.add('exit');
+
+        char.classList.remove("enter");
+
+        char.classList.add("exit");
+
       }, delay);
+
     });
 
-    const exitTotalTime = currentChars.length * staggerDuration + 350;
+
+    const exitTotalTime =
+      currentChars.length * staggerDuration + 350;
+
+
     setTimeout(() => {
+
       index = (index + 1) % roles.length;
+
       renderRole(roles[index]);
+
     }, exitTotalTime);
+
   }
 
+
+
+  // first load
   renderRole(roles[index]);
-  setInterval(rotateToNext, rotationInterval);
-})();
+
+
+  // continue animation
+  setInterval(
+    rotateToNext,
+    rotationInterval
+  );
+
+
+});
 
 // ── Navbar scroll effect ──────────────────────────────────────
 window.addEventListener('scroll', () => {
