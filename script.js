@@ -95,6 +95,7 @@
 })();
 
 // ── RotatingText: cycles hero role titles (port of RotatingText component) ──
+// ── RotatingText: cycles hero role titles (bulletproof inline-style version) ──
 document.addEventListener("DOMContentLoaded", function () {
 
   const roles = [
@@ -123,11 +124,21 @@ document.addEventListener("DOMContentLoaded", function () {
     return Array.from(text);
   }
 
+  function setCharStyle(span, opacity, translateY) {
+    span.style.setProperty("opacity", String(opacity), "important");
+    span.style.setProperty("transform", `translateY(${translateY})`, "important");
+  }
+
   function buildCharSpans(text) {
     return splitToChars(text).map((ch) => {
       const span = document.createElement("span");
       span.className = "text-rotate-char";
       span.textContent = ch === " " ? "\u00A0" : ch;
+      // base state: invisible, shifted down — set inline so nothing else can override it
+      span.style.setProperty("display", "inline-block", "important");
+      span.style.setProperty("color", "#ff7a00", "important");
+      span.style.setProperty("transition", "transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease", "important");
+      setCharStyle(span, 0, "100%");
       return span;
     });
   }
@@ -139,11 +150,14 @@ document.addEventListener("DOMContentLoaded", function () {
       visibleEl.appendChild(char);
     });
     srEl.textContent = text;
+
     requestAnimationFrame(() => {
-      chars.forEach((char, i) => {
-        setTimeout(() => {
-          char.classList.add("enter");
-        }, i * staggerDuration);
+      requestAnimationFrame(() => {
+        chars.forEach((char, i) => {
+          setTimeout(() => {
+            setCharStyle(char, 1, "0");
+          }, i * staggerDuration);
+        });
       });
     });
   }
@@ -153,8 +167,8 @@ document.addEventListener("DOMContentLoaded", function () {
     currentChars.forEach((char, i) => {
       const delay = (currentChars.length - 1 - i) * staggerDuration;
       setTimeout(() => {
-        char.classList.remove("enter");
-        char.classList.add("exit");
+        char.style.setProperty("transition", "transform 0.35s cubic-bezier(0.55,0,1,0.45), opacity 0.25s ease", "important");
+        setCharStyle(char, 0, "-120%");
       }, delay);
     });
     const exitTotalTime = currentChars.length * staggerDuration + 350;
@@ -164,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, exitTotalTime);
   }
 
-  // Use FontFaceSet.ready if available, to wait for fonts before animating
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       renderRole(roles[index]);
